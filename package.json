@@ -1,0 +1,29 @@
+{
+  "name": "finances-tracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hankthemason/finances-tracker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hankthemason/finances-tracker/issues"
+  },
+  "homepage": "https://github.com/hankthemason/finances-tracker#readme",
+  "devDependencies": {
+    "concurrently": "^6.0.0",
+    "cors": "^2.8.5",
+    "nodemon": "^2.0.7"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "pg": "^8.5.1"
+  }
+}
