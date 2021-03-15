@@ -27,4 +27,14 @@ app.use('/login', (req, res) => {
 
 app.get('/users', db.getUsers)
 
+app.post('/register', (req, res) => {
+  let { username, email, password, password2 } = req.body
+  console.log({ 
+    username, 
+    email,
+    password,
+    password2
+  })
+})
+
 module.exports = app
