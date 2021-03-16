@@ -8,7 +8,7 @@ const registerUser = async (registrationCredentials: RegistrationCredentials) =>
     },
     body: JSON.stringify(registrationCredentials)
   })
-    .then(data => data.json())
+  .then(data => data.json())
 }
 
 export const Register = () => {
@@ -26,6 +26,7 @@ export const Register = () => {
         password, 
         password2
       })
+      console.log(result) 
       //setToken(token)
     }
   }

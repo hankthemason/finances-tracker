@@ -16,8 +16,28 @@ const getUsers = (request, response) => {
   })
 }
 
+const userExists = (email) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `SELECT * FROM users 
+      WHERE email = $1`, [email], (err, results) => {
+        if (err) {
+          return reject(err) 
+        }
+      
+        if (results.rows.length > 0) {
+          resolve(true)
+        }
+
+        resolve(false)
+      }
+    )
+  })
+}
+
 module.exports = {
   getUsers,
+  userExists,
   // getUserById,
   // createUser,
   // updateUser,
