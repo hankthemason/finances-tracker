@@ -1,22 +1,40 @@
 import React, { useState } from 'react';
+import { useHistory } from "react-router-dom";
 
-const registerUser = async (registrationCredentials: RegistrationCredentials) => {
-  return fetch('http://localhost:5000/register', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(registrationCredentials)
-  })
-  .then(data => data.json())
-}
-
-export const Register = () => {
+export const Register = ({ setFlash }: RegisterProps) => {
   const [username, setUsername] = useState<string>()
   const [password, setPassword] = useState<string>()
   const [password2, setPassword2] = useState<string>()
   const [email, setEmail] = useState<string>();
+  const [errors, setErrors] = useState<{}>({})
 
+  let history = useHistory();
+  
+  const registerUser = async (registrationCredentials: RegistrationCredentials) => {
+    return fetch('http://localhost:5000/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(registrationCredentials)
+    })
+    .then(data => data.json())
+    .then(result => {
+      if (result.message === 'success') {
+        setFlash('registration successful!')
+        history.push('/login')
+      }
+      if (result.errors) {
+        setErrors(result.errors)
+      }
+    })
+    .catch(err => {
+      console.error(err)
+    })
+  }
+
+
+  
   const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (username && email && password && password2) {
@@ -26,10 +44,11 @@ export const Register = () => {
         password, 
         password2
       })
-      console.log(result) 
       //setToken(token)
     }
   }
+
+  console.log(errors)
 
   return(
     <div className='register-wrapper'>

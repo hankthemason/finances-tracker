@@ -4,3 +4,7 @@ interface RegistrationCredentials {
   password: string,
   password2: string
 }
+
+interface RegisterProps {
+  setFlash: (s: string) => void
+}

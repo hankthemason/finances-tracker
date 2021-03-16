@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import { Dashboard } from './components/Dashboard/Dashboard'
@@ -12,14 +12,33 @@ import { useToken } from './hooks/useToken'
 function App() {
   
   const { token, setToken } = useToken()
+  const [flash, setFlash] = useState<string>('')
 
   // if(!token) {
   //   return <Login setToken={setToken} />
   // }
 
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (flash) {
+      timer = setTimeout(() => {
+        setFlash('')
+      }, 4000)
+    }
+    return () => {
+      if (timer) {
+        clearTimeout(timer)
+      }
+    }
+  }, [flash])
+
   return (
   <div className="wrapper"> 
     <h1>Application</h1>
+    {flash && 
+    <div>
+      {flash}
+    </div>}
     <BrowserRouter>
       <Switch>
         <Route path='/dashboard'>
@@ -29,7 +48,7 @@ function App() {
           <Preferences />
         </Route>
         <Route path='/register'>
-          <Register />
+          <Register setFlash={setFlash}/>
         </Route>
         <Route path='/login'>
           <Login setToken={setToken}/>

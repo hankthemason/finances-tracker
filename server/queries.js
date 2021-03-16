@@ -35,9 +35,24 @@ const userExists = (email) => {
   })
 }
 
+const createUser = async (username, email, password) => {
+  try {
+    const result = await pool.query(
+      `INSERT INTO users (username, email, password)
+      VALUES ($1, $2, $3)
+      RETURNING id, password`, 
+      [username, email, password]
+    )
+    return result.rows[0]
+  } catch(err) {
+    console.error(err)
+  }
+}
+
 module.exports = {
   getUsers,
   userExists,
+  createUser,
   // getUserById,
   // createUser,
   // updateUser,
