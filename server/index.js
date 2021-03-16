@@ -50,7 +50,16 @@ app.post('/register', async (req, res) => {
   let errors = []
 
   if (!username || !email || !password || !password2) {
-    errors.push({ message: "Please enter all fields" })
+    errors.push({ 
+      type: "form",
+      message: "Please enter all fields" })
+  }
+
+  let userExists = await db.userExists(email)
+  if (userExists) {
+    errors.push({
+      type: "email", 
+      message: "This email address has already been registered."})
   }
 
   if (password.length < 6) {
@@ -72,19 +81,10 @@ app.post('/register', async (req, res) => {
   } else {
     //form validation has passed
     let hashedPassword = await bcrypt.hash(password, 10);
-    let userExists = await db.userExists(email)
-    if (userExists) {
-      errors.push({
-        type: "email", 
-        message: "This email address has already been registered."})
-      res.send({
-        errors: errors
-      })
-    } else {
-      let result = await db.createUser(username, email, hashedPassword)
-      if (result) {
-        res.send({message: "success"})
-      }
+
+    let result = await db.createUser(username, email, hashedPassword)
+    if (result) {
+      res.send({message: "success"})
     }
   }
 })
