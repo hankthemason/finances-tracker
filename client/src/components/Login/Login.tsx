@@ -1,32 +1,43 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import './Login.css'
 
-const loginUser = async (credentials: any) => {
-  return fetch('http://localhost:5000/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(credentials)
-  })
-    .then(data => data.json())
-}
-
 export const Login = ({ setToken }: any) => {
-  const [username, setUserName] = useState<string>();
+  const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
+
+  const history = useHistory()
+
+  const loginUser = async (credentials: any) => {
+    return fetch('http://localhost:5000/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(credentials)
+    })
+    .then(data => data.json())
+    .then(result => {
+      result.message === 'successfully authenticated' ?
+      history.push('/dashboard')  : console.log('yo')
+    })
+  }
 
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
-    const token = await loginUser({
-      username,
+    const res = await loginUser({
+      email,
       password
     })
-    setToken(token)
+    // const token = await loginUser({
+    //   email,
+    //   password
+    // })
+    // setToken(token)
   }
 
   return(
@@ -34,8 +45,8 @@ export const Login = ({ setToken }: any) => {
       <h1>Please Log In</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          <p>Username</p>
-          <input type="text" onChange={e => setUserName(e.target.value)}/>
+          <p>Email Address</p>
+          <input type="text" onChange={e => setEmail(e.target.value)}/>
         </label>
         <label>
           <p>Password</p>

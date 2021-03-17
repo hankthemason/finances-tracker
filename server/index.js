@@ -4,7 +4,11 @@ const db = require('./queries')
 const cors = require('cors')
 const bcrypt = require('bcrypt')
 const session = require('express-session')
-const flash = require('express-flash')
+const passport = require('passport')
+
+const initializePassport = require('./passportConfig');
+const { restart } = require('nodemon');
+initializePassport(passport)
 
 const ENV = process.env.NODE_ENV;
 const PORT = process.env.PORT || 5000;
@@ -24,7 +28,8 @@ app.use(
   })
 )
 
-app.use(flash())
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}.`);
@@ -32,12 +37,6 @@ app.listen(PORT, () => {
 
 app.get('/', (request, response) => {
   response.json({ info: 'Node.js, Express, and Postgres API' })
-})
-
-app.use('/login', (req, res) => {
-  res.send({
-    token: 'test123'
-  })
 })
 
 app.get('/users', db.getUsers)
@@ -88,5 +87,19 @@ app.post('/register', async (req, res) => {
     }
   }
 })
+
+app.post("/login", (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) throw err;
+    if (!user) res.status(400).send({message: 'login unsuccessful'});
+    else {
+      req.logIn(user, (err) => {
+        if (err) throw err;
+        res.status(200).send({message: 'successfully authenticated'});
+        console.log(req.user);
+      });
+    }
+  })(req, res, next);
+});
 
 module.exports = app

@@ -20,6 +20,7 @@ export const Register = ({ setFlash }: RegisterProps) => {
     })
     .then(data => data.json())
     .then(result => {
+      console.log(result)
       if (result.message === 'success') {
         setFlash('registration successful!')
         history.push('/login')

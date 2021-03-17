@@ -1,4 +1,5 @@
 const Pool = require('pg').Pool
+
 const pool = new Pool({
   user: 'financestracker',
   host: 'localhost',
@@ -24,11 +25,9 @@ const userExists = (email) => {
         if (err) {
           return reject(err) 
         }
-      
         if (results.rows.length > 0) {
           resolve(true)
         }
-
         resolve(false)
       }
     )
@@ -50,6 +49,7 @@ const createUser = async (username, email, password) => {
 }
 
 module.exports = {
+  pool,
   getUsers,
   userExists,
   createUser,
