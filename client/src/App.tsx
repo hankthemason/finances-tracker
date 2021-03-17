@@ -50,7 +50,7 @@ function App() {
         <Route path='/register'>
           <Register setFlash={setFlash}/>
         </Route>
-        <Route path='/login'>
+        <Route path={['/', '/login']}>
           <Login setToken={setToken}/>
         </Route>
       </Switch>
