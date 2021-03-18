@@ -7,19 +7,11 @@ import { Login } from './components/Login/Login'
 import { Register } from './components/Register/Register'
 import { Preferences } from './components/Preferences/Preferences'
 import './App.css'
-import { useToken } from './hooks/useToken'
-
 
 function App() {
-  const { user } = useAuth()
-  console.log(user)
-  const { token, setToken } = useToken()
+  const { token } = useAuth()
+  console.log(token)
   const [flash, setFlash] = useState<string>('')
-
-  // if(!token) {
-  //   return <Login setToken={setToken} />
-  // }
-
   useEffect(() => {
     let timer: NodeJS.Timeout;
     if (flash) {
@@ -44,6 +36,7 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route path='/dashboard'>
+          { token ? <Dashboard /> : <Redirect to='/login' /> }
         </Route>
         <Route path='/preferences'>
           <Preferences />
@@ -52,7 +45,7 @@ function App() {
           <Register setFlash={setFlash}/>
         </Route>
         <Route path={['/', '/login']}>
-          <Login setToken={setToken}/>
+          <Login />
         </Route>
       </Switch>
     </BrowserRouter>

@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/authContext'
 import { useHistory, Link } from 'react-router-dom'
-import PropTypes from 'prop-types'
-
 import './Login.css'
 
-export const Login = (props: LoginProps) => {
-  const { setUser } = useAuth()
+export const Login = (props: any) => {
+  const { setToken } = useAuth()
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
 
@@ -22,10 +20,9 @@ export const Login = (props: LoginProps) => {
     })
     .then(data => data.json())
     .then(result => {
-      if (result.user)  {
-        setUser(result.user)
+      if (result.token)  {
+        setToken(result.token)
         history.push('/dashboard')
-        console.log('here')
       } else {
         console.log('yo')
       }
@@ -35,10 +32,7 @@ export const Login = (props: LoginProps) => {
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
-    console.log('submit')
     e.preventDefault();
-    console.log(email)
-    console.log(password)
     const res = await loginUser({
       email,
       password
@@ -60,7 +54,7 @@ export const Login = (props: LoginProps) => {
         </label>
         <label>
           <p>Password</p>
-          <input type="password" onChange={e => setPassword(e.target.value)}/>
+          <input type="password" onChange={e => setPassword(e.target.value)} autoComplete={'on'}/>
         </label>
         <div>
           <button type="submit">Submit</button>
@@ -71,8 +65,4 @@ export const Login = (props: LoginProps) => {
       </form>
     </div>
   )
-}
-
-Login.propTypes = {
-  setToken: PropTypes.func.isRequired
 }

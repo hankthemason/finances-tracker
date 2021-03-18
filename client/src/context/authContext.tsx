@@ -5,27 +5,20 @@ import React,
         useContext, 
         useState, 
         useEffect } from 'react';
-        
-interface Props {
-  children: ReactNode
-}
-
-type User = {
-  id: number | null,
-  email: string | null
-}
-
-type AuthContextType = {
-  user: User,
-  setUser: ((user: User) => void)
-}
+import { useJwt } from "react-jwt";
 
 const defaultContextValue: AuthContextType = {
   user: {
     id: null,
     email: null
   },
-  setUser: () => {}
+  setUser: () => {},
+  token: '',
+  setToken: () => {}
+}
+
+const defaultTokenValue = {
+  token: null
 }
 
 
@@ -33,28 +26,31 @@ export const AuthContext = createContext<AuthContextType>(defaultContextValue)
 
 export const AuthProvider = ({ children }: Props) => {
   const [user, setUser] = useState(defaultContextValue.user);
+  const t = localStorage.getItem('token')
+  const [token, setToken] = useState(t != null ? t : defaultContextValue.token)
 
   useEffect(() => {
-    if (user.id != null) {
-      localStorage.setItem('user', JSON.stringify(user))
-    }
+    if (token && token != '') 
+      localStorage.setItem('token', token)
     
-    function getCurrentUser() {
-      var userStr = localStorage.getItem('user');
+    function getToken() {
+      var tokenStr = localStorage.getItem('token');
+      if (tokenStr) {
+        setToken(tokenStr)
+      }
       try {
-        return userStr ?
-        JSON.parse(userStr) : null
+        return tokenStr
       } catch (ex) {
         return null; // or do some other error handling
       }
     }
-
-    console.log(getCurrentUser())
-  }, [user])
+    getToken()
+  }, [token])
   
-
+  const { decodedToken, isExpired, reEvaluateToken } = useJwt(token);
+  
   return (
-    <AuthContext.Provider value={{user, setUser}}>
+    <AuthContext.Provider value={{user, setUser, token, setToken}}>
       {children}
     </AuthContext.Provider>
   )

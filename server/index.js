@@ -5,6 +5,7 @@ const cors = require('cors')
 const bcrypt = require('bcrypt')
 const session = require('express-session')
 const passport = require('passport')
+const jwt = require('jsonwebtoken')
 
 const initializePassport = require('./passportConfig');
 const { restart } = require('nodemon');
@@ -90,15 +91,21 @@ app.post('/register', async (req, res) => {
 
 app.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
-    console.log(user)
     if (err) throw err;
-    if (!user) res.status(400).send({message: 'login unsuccessful'});
+    if (!user) res.status(400).send({message: 'login failed'});
     else {
-      req.logIn(user, (err) => {
-        if (err) throw err;
-        res.status(200).send({user: user});
-        console.log(req.user);
-      });
+      req.login(
+        user,
+        { session: false },
+        async (error) => {
+          if (error) return next(error);
+
+          const body = { id: user.id, email: user.email };
+          const token = jwt.sign({ user: body }, 'TOP_SECRET');
+
+          return res.json({ token });
+        }
+      );
     }
   })(req, res, next);
 });

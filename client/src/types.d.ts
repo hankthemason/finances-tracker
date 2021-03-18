@@ -9,10 +9,6 @@ interface RegisterProps {
   setFlash: (s: string) => void
 }
 
-interface LoginProps {
-  setToken: (s: string) => void
-}
-
 interface Error {
   type: string,
   message: string
@@ -25,4 +21,22 @@ interface ErrorObj {
   password2?: string,
   email?: string,
   form?: string
+}
+
+interface Props {
+  children: ReactNode
+}
+
+type User = {
+  id: number | null,
+  email: string | null
+}
+
+type Token = string
+
+type AuthContextType = {
+  user: User,
+  setUser: ((user: User) => void),
+  token: Token,
+  setToken: ((token: Token) => void)
 }
