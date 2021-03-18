@@ -9,6 +9,11 @@ interface RegisterProps {
   setFlash: (s: string) => void
 }
 
+interface LoginProps {
+  setToken: (s: string) => void,
+  setAuthenticated: (b: boolean) => void
+}
+
 interface Error {
   type: string,
   message: string

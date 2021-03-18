@@ -1,7 +1,11 @@
 import React from 'react';
+import { Logout } from '../Logout'
 
 export const Dashboard = () => {
   return(
-    <h2>Dashboard</h2>
+    <div> 
+      <h2>Dashboard</h2>
+      <Logout />
+    </div>
   )
 }

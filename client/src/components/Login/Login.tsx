@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import './Login.css'
 
-export const Login = ({ setToken }: any) => {
+export const Login = (props: LoginProps) => {
+  const {setAuthenticated} = props
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
 
@@ -20,15 +21,22 @@ export const Login = ({ setToken }: any) => {
     })
     .then(data => data.json())
     .then(result => {
-      result.message === 'successfully authenticated' ?
-      history.push('/dashboard')  : console.log('yo')
+      if (result.message === 'successfully authenticated')  {
+        setAuthenticated(true)
+        history.push('/dashboard')
+      } else {
+        console.log('yo')
+      }
     })
   }
 
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
+    console.log('submit')
     e.preventDefault();
+    console.log(email)
+    console.log(password)
     const res = await loginUser({
       email,
       password
@@ -54,6 +62,9 @@ export const Login = ({ setToken }: any) => {
         </label>
         <div>
           <button type="submit">Submit</button>
+        </div>
+        <div>
+          <Link to='/register'>new user? click here to register</Link>
         </div>
       </form>
     </div>
