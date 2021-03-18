@@ -1,9 +1,8 @@
 const LocalStrategy = require('passport-local').Strategy;
-const { pool } = require('./queries')
+const pool = require('./db')
 const bcrypt = require('bcrypt')
 
 function initialize(passport) {
-  console.log("Initialized");
 
   const authenticateUser = (email, password, done) => {
     pool.query(

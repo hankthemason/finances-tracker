@@ -1,11 +1,17 @@
 const path = require('path');
 const express = require('express');
+const p = require('./db')
 const db = require('./queries')
 const cors = require('cors')
 const bcrypt = require('bcrypt')
 const session = require('express-session')
 const passport = require('passport')
 const jwt = require('jsonwebtoken')
+const Models = require('./models')
+const U = require('./models/users')
+
+let models = new Models(p)
+models.init()
 
 const initializePassport = require('./passportConfig');
 const { restart } = require('nodemon');
@@ -40,7 +46,7 @@ app.get('/', (request, response) => {
   response.json({ info: 'Node.js, Express, and Postgres API' })
 })
 
-app.get('/users', db.getUsers)
+app.get('/users', models.users.getUsers)
 
 app.post('/register', async (req, res) => {
   let { username, email, password, password2 } = req.body
@@ -55,7 +61,7 @@ app.post('/register', async (req, res) => {
       message: "Please enter all fields" })
   }
 
-  let userExists = await db.userExists(email)
+  let userExists = await models.users.userExists(email)
   if (userExists) {
     errors.push({
       type: "email", 
@@ -82,7 +88,7 @@ app.post('/register', async (req, res) => {
     //form validation has passed
     let hashedPassword = await bcrypt.hash(password, 10);
 
-    let result = await db.createUser(username, email, hashedPassword)
+    let result = await models.users.createUser(username, email, hashedPassword)
     if (result) {
       res.send({message: "success"})
     }
