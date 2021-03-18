@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { useAuth } from '../../context/authContext'
 import { useHistory, Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import './Login.css'
 
 export const Login = (props: LoginProps) => {
-  const {setAuthenticated} = props
+  const { setUser } = useAuth()
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
 
@@ -21,9 +22,10 @@ export const Login = (props: LoginProps) => {
     })
     .then(data => data.json())
     .then(result => {
-      if (result.message === 'successfully authenticated')  {
-        setAuthenticated(true)
+      if (result.user)  {
+        setUser(result.user)
         history.push('/dashboard')
+        console.log('here')
       } else {
         console.log('yo')
       }

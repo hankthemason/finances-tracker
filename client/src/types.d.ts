@@ -10,8 +10,7 @@ interface RegisterProps {
 }
 
 interface LoginProps {
-  setToken: (s: string) => void,
-  setAuthenticated: (b: boolean) => void
+  setToken: (s: string) => void
 }
 
 interface Error {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
 
+import { useAuth, AuthProvider } from './context/authContext'
 import { Dashboard } from './components/Dashboard/Dashboard'
 import { Login } from './components/Login/Login'
 import { Register } from './components/Register/Register'
@@ -10,10 +11,10 @@ import { useToken } from './hooks/useToken'
 
 
 function App() {
-  
+  const { user } = useAuth()
+  console.log(user)
   const { token, setToken } = useToken()
   const [flash, setFlash] = useState<string>('')
-  const [authenticated, setAuthenticated] = useState<boolean>(false)
 
   // if(!token) {
   //   return <Login setToken={setToken} />
@@ -43,10 +44,6 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route path='/dashboard'>
-          {authenticated ? 
-          <Dashboard />
-          : <Redirect to='/' />
-          }
         </Route>
         <Route path='/preferences'>
           <Preferences />
@@ -55,7 +52,7 @@ function App() {
           <Register setFlash={setFlash}/>
         </Route>
         <Route path={['/', '/login']}>
-          <Login setToken={setToken} setAuthenticated={setAuthenticated}/>
+          <Login setToken={setToken}/>
         </Route>
       </Switch>
     </BrowserRouter>

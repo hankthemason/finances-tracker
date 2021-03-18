@@ -90,12 +90,13 @@ app.post('/register', async (req, res) => {
 
 app.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
+    console.log(user)
     if (err) throw err;
     if (!user) res.status(400).send({message: 'login unsuccessful'});
     else {
       req.logIn(user, (err) => {
         if (err) throw err;
-        res.status(200).send({message: 'successfully authenticated'});
+        res.status(200).send({user: user});
         console.log(req.user);
       });
     }
