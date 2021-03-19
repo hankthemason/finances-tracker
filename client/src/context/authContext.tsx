@@ -35,6 +35,8 @@ export const AuthProvider = ({ children }: Props) => {
   const [token, setToken] = useState(t != null ? t : defaultContextValue.token)
 
   useEffect(() => {
+    //1. check session storage for a token
+    //2. if there's a token, set that
     function getToken() {
       var tokenStr = localStorage.getItem('token');
       if (tokenStr) {

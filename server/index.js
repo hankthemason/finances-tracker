@@ -123,7 +123,11 @@ app.post("/login", (req, res, next) => {
           const body = { user_id: user.user_id, email: user.email };
           const token = jwt.sign({ user: body }, 'TOP_SECRET');
 
-          return res.json({ token });
+          return res.json({ token, user: {
+            user_id: user.user_id,
+            email: user.email,
+            username: user.username
+          } });
         }
       );
     }

@@ -20,6 +20,7 @@ export const Login = (props: any) => {
     })
     .then(data => data.json())
     .then(result => {
+      console.log(result)
       if (result.token)  {
         setToken(result.token)
         history.push('/dashboard')
