@@ -37,11 +37,6 @@ export const Login = (props: any) => {
       email,
       password
     })
-    // const token = await loginUser({
-    //   email,
-    //   password
-    // })
-    // setToken(token)
   }
 
   return(
