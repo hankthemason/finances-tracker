@@ -20,9 +20,11 @@ export const DateAndTime = () => {
   const m = new Date().toTimeString().substring(3, 5)
 
   let desc
-  if (h > 12) {
-    h -= 12
+  if (h >= 12) {
     desc = 'PM'
+    if (h > 12) {
+      h -= 13
+    }
   } else {
     desc = 'AM'
   }

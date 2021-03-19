@@ -28,7 +28,7 @@ interface Props {
 }
 
 type User = {
-  id: number | null,
+  user_id: number | null,
   email: string | null
 }
 
@@ -39,4 +39,8 @@ type AuthContextType = {
   setUser: ((user: User) => void),
   token: Token,
   setToken: ((token: Token) => void)
+}
+
+interface ExpensesProps {
+  date: Date
 }

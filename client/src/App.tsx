@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
 
 import { useAuth, AuthProvider } from './context/authContext'
-import { Dashboard } from './components/Dashboard/Dashboard'
-import { Login } from './components/Login/Login'
-import { Register } from './components/Register/Register'
-import { Preferences } from './components/Preferences/Preferences'
+import { Dashboard } from './components/Dashboard'
+import { Login } from './components/Login'
+import { Register } from './components/Register'
+import { Preferences } from './components/Preferences'
 import './App.css'
 
 function App() {
   const { token } = useAuth()
-  console.log(token)
+  
   const [flash, setFlash] = useState<string>('')
   useEffect(() => {
     let timer: NodeJS.Timeout;

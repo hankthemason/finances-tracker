@@ -9,7 +9,7 @@ import { useJwt } from "react-jwt";
 
 const defaultContextValue: AuthContextType = {
   user: {
-    id: null,
+    user_id: null,
     email: null
   },
   setUser: () => {},
@@ -21,6 +21,11 @@ const defaultTokenValue = {
   token: null
 }
 
+interface UserInfo {
+  email: string,
+  id: number
+}
+
 
 export const AuthContext = createContext<AuthContextType>(defaultContextValue)
 
@@ -30,9 +35,6 @@ export const AuthProvider = ({ children }: Props) => {
   const [token, setToken] = useState(t != null ? t : defaultContextValue.token)
 
   useEffect(() => {
-    if (token && token != '') 
-      localStorage.setItem('token', token)
-    
     function getToken() {
       var tokenStr = localStorage.getItem('token');
       if (tokenStr) {
@@ -45,10 +47,21 @@ export const AuthProvider = ({ children }: Props) => {
       }
     }
     getToken()
-  }, [token])
-  
+
+    if (token && token != '') {
+      localStorage.setItem('token', token)
+    }
+
+  }, [])
+
   const { decodedToken, isExpired, reEvaluateToken } = useJwt(token);
-  
+
+  useEffect(() => {
+    if (decodedToken) {
+      setUser(decodedToken.user)
+    }
+  }, [decodedToken])
+    
   return (
     <AuthContext.Provider value={{user, setUser, token, setToken}}>
       {children}
