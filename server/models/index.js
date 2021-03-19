@@ -1,5 +1,7 @@
 const Users = require('./users')
 const Categories = require('./categories')
+const Expenses = require('./expenses')
+const Income = require('./income')
 
 class Models {
   constructor(pool) {
