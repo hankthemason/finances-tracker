@@ -12,8 +12,12 @@ class Models {
 
     this.users = new Users(this.pool)
     this.categories = new Categories(this.pool)
+    this.expenses = new Expenses(this.pool)
+    this.income = new Income(this.pool)
 
     await this.categories.init()
+    await this.expenses.init()
+    await this.income.init()
   }
 }
 

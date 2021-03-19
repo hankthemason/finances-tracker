@@ -48,6 +48,20 @@ app.get('/', (request, response) => {
 
 app.get('/users', models.users.getUsers)
 
+app.get('/api/expenses', async (req, res) => {
+  const user_id = req.query.user_id
+  const month = req.query.month
+  const expenses = await models.expenses.getTotalExpensesByMonth(user_id, month)
+  res.json(expenses)
+})
+
+app.get('/api/income', async (req, res) => {
+  const user_id = req.query.user_id
+  const month = req.query.month
+  const income = await models.income.getTotalIncomeByMonth(user_id, month)
+  res.json(income)
+})
+
 app.post('/register', async (req, res) => {
   let { username, email, password, password2 } = req.body
   
@@ -106,7 +120,7 @@ app.post("/login", (req, res, next) => {
         async (error) => {
           if (error) return next(error);
 
-          const body = { id: user.id, email: user.email };
+          const body = { user_id: user.user_id, email: user.email };
           const token = jwt.sign({ user: body }, 'TOP_SECRET');
 
           return res.json({ token });

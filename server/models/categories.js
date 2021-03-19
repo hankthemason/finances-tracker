@@ -8,7 +8,7 @@ class Categories {
       await this.pool.query(
         `CREATE TABLE IF NOT EXISTS categories (
             category_id serial PRIMARY KEY,
-            category_name VARCHAR (50) NOT NULL,
+            category_name VARCHAR (50) UNIQUE NOT NULL,
             user_id INT NOT NULL,
             type VARCHAR (20) NOT NULL,
             FOREIGN KEY (user_id)
