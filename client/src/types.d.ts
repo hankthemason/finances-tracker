@@ -38,7 +38,8 @@ type AuthContextType = {
   user: User,
   setUser: ((user: User) => void),
   token: Token,
-  setToken: ((token: Token) => void)
+  setToken: ((token: Token) => void),
+  loginUser: ((credentials: any) => any)
 }
 
 interface ExpensesProps {

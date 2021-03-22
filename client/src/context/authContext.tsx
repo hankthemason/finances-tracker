@@ -1,4 +1,3 @@
-import { stringify } from 'node:querystring';
 import React, 
       { createContext, 
         ReactNode, 
@@ -14,7 +13,8 @@ const defaultContextValue: AuthContextType = {
   },
   setUser: () => {},
   token: '',
-  setToken: () => {}
+  setToken: () => {},
+  loginUser: () => {}
 }
 
 const defaultTokenValue = {
@@ -31,41 +31,62 @@ export const AuthContext = createContext<AuthContextType>(defaultContextValue)
 
 export const AuthProvider = ({ children }: Props) => {
   const [user, setUser] = useState(defaultContextValue.user);
-  const t = localStorage.getItem('token')
-  const [token, setToken] = useState(t != null ? t : defaultContextValue.token)
+  const [token, setToken] = useState(defaultContextValue.token)
 
-  useEffect(() => {
-    //1. check session storage for a token
-    //2. if there's a token, set that
-    function getToken() {
-      var tokenStr = localStorage.getItem('token');
-      if (tokenStr) {
-        setToken(tokenStr)
+  const loginUser = (credentials: any) => {
+    return fetch('/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(credentials)
+    })
+    .then(data => data.json())
+    .then(result => {
+      if (result.token && result.user)  {
+        setToken(result.token)
+        setUser(result.user)
+        localStorage.setItem('token', JSON.stringify(result.token))
+        localStorage.setItem('user', JSON.stringify(result.user))
+      } else {
+        console.log('yo')
       }
-      try {
-        return tokenStr
-      } catch (ex) {
-        return null; // or do some other error handling
-      }
-    }
-    getToken()
+      return result
+    })
+  }
 
-    if (token && token != '') {
-      localStorage.setItem('token', token)
-    }
+  // useEffect(() => {
+  //   //1. check session storage for a token
+  //   //2. if there's a token, set that
+  //   function getToken() {
+  //     var tokenStr = localStorage.getItem('token');
+  //     if (tokenStr) {
+  //       setToken(tokenStr)
+  //     }
+  //     try {
+  //       return tokenStr
+  //     } catch (ex) {
+  //       return null; // or do some other error handling
+  //     }
+  //   }
+  //   getToken()
 
-  }, [])
+  //   if (token && token != '') {
+  //     localStorage.setItem('token', token)
+  //   }
 
-  const { decodedToken, isExpired, reEvaluateToken } = useJwt(token);
+  // }, [])
 
-  useEffect(() => {
-    if (decodedToken) {
-      setUser(decodedToken.user)
-    }
-  }, [decodedToken])
+  // const { decodedToken, isExpired, reEvaluateToken } = useJwt(token);
+
+  // useEffect(() => {
+  //   if (decodedToken) {
+  //     setUser(decodedToken.user)
+  //   }
+  // }, [decodedToken])
     
   return (
-    <AuthContext.Provider value={{user, setUser, token, setToken}}>
+    <AuthContext.Provider value={{user, setUser, token, setToken, loginUser}}>
       {children}
     </AuthContext.Provider>
   )

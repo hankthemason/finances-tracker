@@ -2,42 +2,25 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/authContext'
 import { useHistory, Link } from 'react-router-dom'
 import './Login.css'
+import { setupMaster } from 'node:cluster';
 
 export const Login = (props: any) => {
-  const { setToken } = useAuth()
+  const { setToken, setUser, loginUser } = useAuth()
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
 
   const history = useHistory()
 
-  const loginUser = async (credentials: any) => {
-    return fetch('http://localhost:5000/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(credentials)
-    })
-    .then(data => data.json())
-    .then(result => {
-      console.log(result)
-      if (result.token)  {
-        setToken(result.token)
-        history.push('/dashboard')
-      } else {
-        console.log('yo')
-      }
-    })
-  }
-
-  const handleSubmit = async (
+  const handleSubmit = (
     e: React.FormEvent<HTMLFormElement>
-  ): Promise<void> => {
+  ) => {
     e.preventDefault();
-    const res = await loginUser({
+    loginUser({
       email,
       password
-    })
+    }).then(console.log('hi')).then(
+      history.push('./dashboard')
+    )
   }
 
   return(
