@@ -5,10 +5,9 @@ import './Login.css'
 import { setupMaster } from 'node:cluster';
 
 export const Login = (props: any) => {
-  const { setToken, setUser, loginUser } = useAuth()
+  const { setUser, loginUser } = useAuth()
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
-
   const history = useHistory()
 
   const handleSubmit = (
@@ -18,7 +17,7 @@ export const Login = (props: any) => {
     loginUser({
       email,
       password
-    }).then(console.log('hi')).then(
+    }).then(
       history.push('./dashboard')
     )
   }

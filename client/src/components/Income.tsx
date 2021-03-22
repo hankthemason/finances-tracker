@@ -13,14 +13,14 @@ export const Income = (props: ExpensesProps) => {
   useEffect(() => {
 
     const getTotalIncome = async() => {
-      await fetch(`/api/income?user_id=${user.user_id}&month=${s}`)
+      await fetch(`/api/income?user_id=${user.info.user_id}&month=${s}`)
       .then(response => response.json())
       .then(result => {
         setTotal(parseFloat(result))
       })
     }
 
-    if (user.user_id) {
+    if (user.info.user_id) {
       getTotalIncome()
     }
   }, [user])

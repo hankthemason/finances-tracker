@@ -15,14 +15,14 @@ export const Expenses = (props: ExpensesProps) => {
   useEffect(() => {
 
     const getTotalExpenses = async() => {
-      await fetch(`/api/expenses?user_id=${user.user_id}&month=${s}`)
+      await fetch(`/api/expenses?user_id=${user.info.user_id}&month=${s}`)
       .then(response => response.json())
       .then(result => {
         setTotal(parseFloat(result))
       })
     }
 
-    if (user.user_id) {
+    if (user.info.user_id) {
       getTotalExpenses()
     }
   }, [user])  

@@ -2,11 +2,18 @@ import React from 'react';
 import { useAuth } from '../context/authContext'
 
 export const Logout = () => {
-  const { setToken } = useAuth()
+  const { setUser } = useAuth()
 
   const handleLogout = () => {
     localStorage.clear()
-    setToken('')
+    setUser({
+      info: {
+        user_id: null,
+        email: null,
+        username: null
+      },
+      token: null
+    })
   }
   return (
     <button onClick={handleLogout}>Logout</button>

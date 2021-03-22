@@ -27,18 +27,22 @@ interface Props {
   children: ReactNode
 }
 
-type User = {
+interface UserInfo {
   user_id: number | null,
-  email: string | null
+  email: string | null,
+  username: string | null
+}
+
+interface UserContextObject {
+  info: UserInfo,
+  token: string | null
 }
 
 type Token = string
 
 type AuthContextType = {
-  user: User,
-  setUser: ((user: User) => void),
-  token: Token,
-  setToken: ((token: Token) => void),
+  user: UserContextObject,
+  setUser: ((user: UserContextObject) => void),
   loginUser: ((credentials: any) => any)
 }
 

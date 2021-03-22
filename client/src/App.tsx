@@ -9,7 +9,7 @@ import { Preferences } from './components/Preferences'
 import './App.css'
 
 function App() {
-  const { token, user } = useAuth()
+  const { user } = useAuth()
   
   const [flash, setFlash] = useState<string>('')
   useEffect(() => {
@@ -35,8 +35,8 @@ function App() {
     </div>}
     <BrowserRouter>
       <Switch>
-        <Route path='/dashboard'>
-          { user ? <Dashboard /> : <Redirect to='/login' /> }
+        <Route exact path={'/'}>
+          {user.token === null ? <Redirect to='/login' /> : <Dashboard />}
         </Route>
         <Route path='/preferences'>
           <Preferences />
@@ -44,8 +44,11 @@ function App() {
         <Route path='/register'>
           <Register setFlash={setFlash}/>
         </Route>
-        <Route path={['/', '/login']}>
-          <Login />
+        <Route path='/login'>
+          {user.token === null ? <Login /> : <Redirect to='/dashboard' />}
+        </Route>
+        <Route path='/dashboard'>
+          {user.token !== null ? <Dashboard /> : <Redirect to='/login' />}
         </Route>
       </Switch>
     </BrowserRouter>
