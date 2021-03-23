@@ -55,6 +55,32 @@ app.get('/api/expenses', async (req, res) => {
   res.json(expenses)
 })
 
+app.get('/api/getExpenseCategories', async (req, res) => {
+  const expenseCategories = await models.categories.getExpenseCategories(req.query.user_id)
+  res.json(expenseCategories)
+})
+
+app.post('/api/addCategory', async (req, res) => {
+  let { user_id, category_name, type } = req.body
+  try {
+    const message = await models.categories.addCategory(user_id, category_name, type)
+    return res.json(message)
+  } catch(error) {
+    return res.status(400).json({ error: error.toString()})
+  }
+})
+
+app.post('/api/addExpense', async (req, res, next) => {
+  let { user_id, amount, date, notes, category } = req.body
+  let message
+  try {
+    const message = await models.expenses.addExpense(user_id, category, amount, notes, date)
+    return res.json(message)
+  } catch(error) {
+    return res.status(400).json({ error: error.toString() })
+  }
+})
+
 app.get('/api/income', async (req, res) => {
   const user_id = req.query.user_id
   const month = req.query.month
@@ -64,6 +90,7 @@ app.get('/api/income', async (req, res) => {
 
 app.post('/register', async (req, res) => {
   let { username, email, password, password2 } = req.body
+
   
   //this might not even be necessary because I think the 
   //frontend component prevents any blank fields 

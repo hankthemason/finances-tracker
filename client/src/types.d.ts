@@ -49,3 +49,24 @@ type AuthContextType = {
 interface ExpensesProps {
   date: Date
 }
+
+type Category = {
+  category_name: string
+}
+
+interface AddExpenseProps {
+  categories: Category[]
+}
+
+interface Expense {
+  user_id: number,
+  category_name: string,
+  amount: number,
+  timestamp: Date,
+  notes: string | null
+}
+
+interface AddCategoryProps {
+  type: string
+  hidden: boolean
+}

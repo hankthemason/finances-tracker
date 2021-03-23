@@ -1,3 +1,5 @@
+const { restart } = require("nodemon")
+
 class Expenses {
   constructor(pool) {
     this.pool = pool
@@ -16,7 +18,7 @@ class Expenses {
             FOREIGN KEY (user_id)
               REFERENCES users (user_id),
             FOREIGN KEY (category_name) 
-              REFERENCES categories (category_name)
+              REFERENCES categories(category_name)
         )`
       )
     } catch(err) {
@@ -48,6 +50,7 @@ class Expenses {
       )
       return result.rows
     } catch(err) {
+      return (err)
       console.error(err)
     }
   }
@@ -66,6 +69,15 @@ class Expenses {
       console.error(err)
     }
   } 
+
+  addExpense = async(user_id, category, amount, notes, date) => {
+    const result = await this.pool.query(
+      `INSERT INTO expenses (user_id, category_name, amount, notes, timestamp)
+      VALUES ($1, $2, $3, $4, $5)
+      RETURNING expense_id`, [user_id, category, amount, notes, date]
+    )
+    return result.rows[0]
+  }
 }
 
 module.exports = Expenses

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/authContext'
 import { useHistory, Link } from 'react-router-dom'
-import './Login.css'
-import { setupMaster } from 'node:cluster';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button'
+//import './Login.css'
 
 export const Login = (props: any) => {
   const { setUser, loginUser } = useAuth()
@@ -25,22 +26,34 @@ export const Login = (props: any) => {
   return(
     <div className="login-wrapper">
       <h1>Please Log In</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          <p>Email Address</p>
-          <input type="text" onChange={e => setEmail(e.target.value)}/>
-        </label>
-        <label>
-          <p>Password</p>
-          <input type="password" onChange={e => setPassword(e.target.value)} autoComplete={'on'}/>
-        </label>
-        <div>
-          <button type="submit">Submit</button>
-        </div>
-        <div>
-          <Link to='/register'>new user? click here to register</Link>
-        </div>
-      </form>
+      <div className='form-wrapper'>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="formBasicEmail">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control 
+              type="email" 
+              placeholder="Enter email" 
+              onChange={e => setEmail(e.target.value)}/>
+            <Form.Text className="text-muted">
+              umm..
+            </Form.Text>
+          </Form.Group>
+          <Form.Group controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control 
+              type="password" 
+              placeholder="Password" 
+              onChange={e => setPassword(e.target.value)}
+            />
+          </Form.Group>
+          <Button variant="primary" type="submit">
+            Submit
+          </Button>
+          <div>
+            <Link to='/register'>new user? click here to register</Link>
+          </div>
+        </Form>
+      </div>
     </div>
   )
 }

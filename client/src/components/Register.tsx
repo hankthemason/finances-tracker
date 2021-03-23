@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button'
 
 export const Register = ({ setFlash }: RegisterProps) => {
   const [username, setUsername] = useState<string>()
@@ -56,31 +58,37 @@ export const Register = ({ setFlash }: RegisterProps) => {
     <div className='register-wrapper'>
       <h1>Please Register</h1>
       {errors && errors.form && <div>{errors.form}</div>}
-      <form onSubmit={handleSubmit}>
-        <label>
-          <p>Username</p>
-          <input type="text" onChange={e => setUsername(e.target.value)}/>
-        </label>
-        <label>
-          <p>Email Address</p>
-          {errors && errors.email && <div>{errors.email}</div>}
-          <input type="text" onChange={e => setEmail(e.target.value)}/>
-        </label>
-        <label>
-          <p>Password</p>
-          {errors && errors.password && <div>{errors.password}</div>}
-          <input type="password" onChange={e => setPassword(e.target.value)}/>
-        </label>
-        <label>
-          <p>Confirm Password</p>
-          {errors && errors.password2 && <div>{errors.password2}</div>}
-          <input type="password" onChange={e => setPassword2(e.target.value)}/>
-        </label>
-        <div>
-          <button type="submit">Submit</button>
-        </div>
-      </form>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group controlId="formBasicUsername">
+          <Form.Label>Username</Form.Label>
+          <Form.Control 
+            type="username" 
+            placeholder="enter username" 
+            onChange={e => setUsername(e.target.value)}/>
+        </Form.Group>
+        <Form.Group controlId="formBasicEmail">
+          <Form.Label>Email</Form.Label>
+          <Form.Control 
+            type="email" 
+            placeholder="enter email" 
+            onChange={e => setEmail(e.target.value)}/>
+        </Form.Group> 
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control 
+            type="password" 
+            placeholder="enter password" 
+            onChange={e => setPassword(e.target.value)}/>
+        </Form.Group> 
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="confirm password"
+            onChange={e => setPassword2(e.target.value)}/>
+        </Form.Group>
+        <Button variant="primary" type="submit">Submit</Button>
+      </Form>
     </div>
-
   )
 }

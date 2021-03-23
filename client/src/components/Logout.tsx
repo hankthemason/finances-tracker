@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAuth } from '../context/authContext'
+import Button from 'react-bootstrap/Button'
 
 export const Logout = () => {
   const { setUser } = useAuth()
@@ -16,6 +17,6 @@ export const Logout = () => {
     })
   }
   return (
-    <button onClick={handleLogout}>Logout</button>
+    <Button variant="primary" onClick={handleLogout}>Logout</Button>
   )
 }

@@ -3,6 +3,8 @@ import { useAuth } from '../context/authContext'
 
 export const Expenses = (props: ExpensesProps) => {
 
+  const [isLoading, setIsLoading] = useState(true)
+
   const { date } = props
 
   const { user } = useAuth()
@@ -10,7 +12,7 @@ export const Expenses = (props: ExpensesProps) => {
   const m = date.getMonth() + 1
   const s = '0'.concat(m.toString())
 
-  const [total, setTotal] = useState<number>()
+  const [total, setTotal] = useState<number>(0)
   
   useEffect(() => {
 
@@ -18,7 +20,12 @@ export const Expenses = (props: ExpensesProps) => {
       await fetch(`/api/expenses?user_id=${user.info.user_id}&month=${s}`)
       .then(response => response.json())
       .then(result => {
-        setTotal(parseFloat(result))
+        if (result) {
+          setTotal(parseFloat(result))
+        } 
+      })
+      .then(result => {
+        setIsLoading(false)
       })
     }
 
@@ -27,9 +34,13 @@ export const Expenses = (props: ExpensesProps) => {
     }
   }, [user])  
 
-  return (
+  return isLoading ? (
     <div>
-      {total && `Your monthly expenses so far are: $${total}.`}
+      loading...
+    </div>
+  ) : (
+    <div>
+      {`Your monthly expenses so far are: $${total}.`}
     </div>
   )
 }

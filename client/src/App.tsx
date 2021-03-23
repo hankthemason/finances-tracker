@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
-
 import { useAuth, AuthProvider } from './context/authContext'
 import { Dashboard } from './components/Dashboard'
 import { Login } from './components/Login'
 import { Register } from './components/Register'
 import { Preferences } from './components/Preferences'
 import './App.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const { user } = useAuth()
@@ -28,7 +28,7 @@ function App() {
 
   return (
   <div className="wrapper"> 
-    <h1>Application</h1>
+    <h1>Income/Expenses Tracker</h1>
     {flash && 
     <div>
       {flash}

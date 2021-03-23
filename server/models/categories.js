@@ -20,12 +20,22 @@ class Categories {
     }
   }
 
-  addCategory = async(user_id, category) => {
+  addCategory = async(user_id, category, type) => {
+    const result = await this.pool.query(
+      `INSERT INTO categories (user_id, category_name, type)
+      VALUES ($1, $2, $3)
+      RETURNING category_id;`, [user_id, category, type]
+    )
+    return result.rows[0]
+  }
+
+  getExpenseCategories = async(user_id) => {
     try {
-      await this.pool.query(
-        `INSERT INTO categories (user_id, category_name)
-        VALUES ($1, $2)`, [user_id, category]
-      )
+      const result = await this.pool.query(
+        `SELECT category_name 
+        FROM categories
+        WHERE user_id = $1`, [user_id])
+        return result.rows
     } catch(err) {
       console.error(err)
     }

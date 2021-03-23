@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useAuth } from '../context/authContext'
 
 export const Income = (props: ExpensesProps) => {
+  const [isLoading, setIsLoading] = useState(true)
 
   const { user } = useAuth()
   
@@ -17,7 +18,7 @@ export const Income = (props: ExpensesProps) => {
       .then(response => response.json())
       .then(result => {
         setTotal(parseFloat(result))
-      })
+      }).then(result => setIsLoading(false))
     }
 
     if (user.info.user_id) {
@@ -27,7 +28,11 @@ export const Income = (props: ExpensesProps) => {
   
   total = total ? total : 0
 
-  return (
+  return isLoading ? (
+    <div>
+      loading...
+    </div>
+  ) : (
     <div>
       {`Your monthly income so far is: $${total}.`}
     </div>
