@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { Link } from 'react-router-dom'
+import { DashboardNavbar } from './DashboardNavbar'
 import { Logout } from './Logout'
 import { Expenses } from './Expenses'
 import { Income } from './Income'
-import { AddExpense } from './AddExpense'
 import { AddItemForm } from './AddItemForm'
 import { useAuth } from '../context/authContext'
 import { DateAndTime } from './Date'
@@ -33,19 +32,24 @@ export const Dashboard = () => {
     }
   }, [])
 
+  const dashboardItems = [
+    {
+      value: 'Add Expense',
+      path: '/dashboard/addExpense'
+    },
+    {
+      value: 'Add Income',
+      path: '/dashboard/addIncome'
+    }
+  ]
+
   return(
-    <div> 
-      <h2>Dashboard</h2>
+    <div>
+      <DashboardNavbar items={dashboardItems}/> 
       <p>{`Hello, ${user.info.username}!`}</p>
       <DateAndTime />
       <Expenses date={d}/>
       <Income date={d}/>
-      <Button href='/dashboard/addExpense'>
-        Add Expense
-      </Button>
-      <Button href='/dashboard/addIncome'>
-        Add Income
-      </Button>
       <Switch>
         <Route path='/dashboard/addExpense'>
           <AddItemForm user={user} type={'expenses'} categories={categories.expenseCategories} />

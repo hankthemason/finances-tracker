@@ -76,3 +76,12 @@ interface AddItemFormProps {
   categories: Category[],
   type: string
 }
+
+interface DashboardItem {
+  value: string
+  path: string
+}
+
+interface DashboardNavbarProps {
+  items: DashboardItem[]
+}

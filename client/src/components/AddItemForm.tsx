@@ -1,15 +1,12 @@
-import { useState, useEffect } from 'react';
-import { useAuth } from '../context/authContext'
-import { AddItemForm } from './AddItemForm'
-import { AddCategory } from './AddCategory'
+import { useState } from 'react'
 import Form from 'react-bootstrap/Form'
+import { AddCategory } from './AddCategory'
 import Button from 'react-bootstrap/Button'
 import { BsX } from 'react-icons/bs'
 
-export const AddExpense = (props: AddExpenseProps) => {
-  const { user } = useAuth()
+export const AddItemForm = ({ user, categories, type }: AddItemFormProps) => {
+  console.log(type)
   const [addCategoryIsHidden, setAddCategoryIsHidden] = useState(true)
-  const [showX, setShowX] = useState(false)
   const [state, setState] = useState({
     category: '',
     amount: 0, 
@@ -17,17 +14,18 @@ export const AddExpense = (props: AddExpenseProps) => {
     date: '',
     user_id: user.info.user_id
   })
+  const [initial, setInitial] = useState({
+    category: 'rent'
+  })
+  
   const [validated, setValidated] = useState(false)
 
-  const { categories } = props
   
-
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
     const form = e.currentTarget;
     if (form.checkValidity() === true) {
       
-      await fetch('/api/addExpense', {
+      await fetch(`/api/addItem?type=${type}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -48,45 +46,45 @@ export const AddExpense = (props: AddExpenseProps) => {
     } 
     setValidated(true);
   }
-
+  
   return (
     <div className='form-wrapper'>
+      <h1>{`Add ${type}`}</h1>
       <Form 
         noValidate 
         validated={validated} 
         onSubmit={handleSubmit}
       >
-        <Form.Group controlId='expenseCategory'>
+        <Form.Group controlId='itemCategory'>
           <Form.Label>Category</Form.Label>
           <Form.Control 
-            required as='select'
+            required 
+            as='select'
             onChange={(e) => setState({...state, category: e.target.value })}
           >
+            <option value=''>select a category</option>
             {categories.map((category, index) => (
               <option key={index} value={category.category_name}>{category.category_name}</option>
             ))}
           </Form.Control>
+          <Form.Control.Feedback type="invalid">
+            Please select a category.
+          </Form.Control.Feedback>
         </Form.Group>
         <a
-        onClick={(e) => {
-          setAddCategoryIsHidden(false)
-          setShowX(true)
-        }}
+        onClick={(e) => setAddCategoryIsHidden(false)}
         style={{cursor: 'pointer', color: 'blue', textDecoration: 'underline', textDecorationColor: 'blue'}}>
           Add a new category
         </a>
-        {showX ? <a 
+        {!addCategoryIsHidden ? <a 
           style={{cursor: 'pointer', color: 'blue', textDecoration: 'underline', textDecorationColor: 'blue'}}
-          onClick={(e) => {
-            setAddCategoryIsHidden(true)
-            setShowX(false)
-        }}>
+          onClick={(e) => setAddCategoryIsHidden(true)}>
           <BsX />
         </a> : null}
         <AddCategory
           hidden={addCategoryIsHidden} 
-          type='expenses'/>
-        <Form.Group controlId='expenseAmount'>
+          type={type}/>
+        <Form.Group controlId='itemAmount'>
           <Form.Label>Amount</Form.Label>
           <Form.Control 
             required 
@@ -97,7 +95,7 @@ export const AddExpense = (props: AddExpenseProps) => {
             Please provide a valid amount.
           </Form.Control.Feedback>
         </Form.Group> 
-        <Form.Group controlId="expenseNotes">
+        <Form.Group controlId="itemNotes">
           <Form.Label>Notes</Form.Label>
           <Form.Control 
             as="textarea" 
@@ -105,12 +103,12 @@ export const AddExpense = (props: AddExpenseProps) => {
             placeholder="(optional)"
             onChange={(e) => setState({...state, notes: e.target.value})}/>
         </Form.Group>
-        <Form.Group controlId="expenseDate">
+        <Form.Group controlId="transactionDate">
           <Form.Label>Date</Form.Label>
           <Form.Control 
             required 
             type="date" 
-            name='date_of_expense'
+            name='date_of_transaction'
             onChange={(e) => setState({...state, date: e.target.value})}/>
           <Form.Control.Feedback type="invalid">
             Please select a date.
