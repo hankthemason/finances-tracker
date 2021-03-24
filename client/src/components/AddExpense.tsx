@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/authContext'
+import { AddItemForm } from './AddItemForm'
 import { AddCategory } from './AddCategory'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
@@ -50,7 +51,11 @@ export const AddExpense = (props: AddExpenseProps) => {
 
   return (
     <div className='form-wrapper'>
-      <Form noValidate validated={validated} onSubmit={handleSubmit}>
+      <Form 
+        noValidate 
+        validated={validated} 
+        onSubmit={handleSubmit}
+      >
         <Form.Group controlId='expenseCategory'>
           <Form.Label>Category</Form.Label>
           <Form.Control 

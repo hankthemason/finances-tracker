@@ -70,3 +70,9 @@ interface AddCategoryProps {
   type: string,
   hidden: boolean
 }
+
+interface AddItemFormProps {
+  user: UserContextObjecta,
+  categories: Category[],
+  type: string
+}

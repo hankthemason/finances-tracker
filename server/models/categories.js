@@ -29,10 +29,10 @@ class Categories {
     return result.rows[0]
   }
 
-  getExpenseCategories = async(user_id) => {
+  getCategories = async(user_id) => {
     try {
       const result = await this.pool.query(
-        `SELECT category_name 
+        `SELECT category_name, type 
         FROM categories
         WHERE user_id = $1`, [user_id])
         return result.rows

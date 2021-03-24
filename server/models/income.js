@@ -39,6 +39,14 @@ class Income {
     }
   }
 
+  addItem = async(user_id, category, amount, notes, date) => {
+    const result = await this.pool.query(
+      `INSERT INTO income (user_id, category_name, amount, notes, timestamp)
+      VALUES ($1, $2, $3, $4, $5)
+      RETURNING income_id`, [user_id, category, amount, notes, date]
+    )
+    return result.rows[0]
+  }
 
 }
 

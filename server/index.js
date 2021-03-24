@@ -55,9 +55,14 @@ app.get('/api/expenses', async (req, res) => {
   res.json(expenses)
 })
 
-app.get('/api/getExpenseCategories', async (req, res) => {
-  const expenseCategories = await models.categories.getExpenseCategories(req.query.user_id)
-  res.json(expenseCategories)
+app.get('/api/getCategories', async (req, res) => {
+  const categories = await models.categories.getCategories(req.query.user_id)
+  let expenseCategories = categories.filter(e => e.type === 'expenses')
+  let incomeCategories = categories.filter(e => e.type === 'income')
+  res.json({
+    expenseCategories: expenseCategories,
+    incomeCategories: incomeCategories
+  })
 })
 
 app.post('/api/addCategory', async (req, res) => {
@@ -66,16 +71,16 @@ app.post('/api/addCategory', async (req, res) => {
     const message = await models.categories.addCategory(user_id, category_name, type)
     return res.json(message)
   } catch(error) {
-    console.log(error)
     return res.status(400).json({ error: error.toString()})
   }
 })
 
-app.post('/api/addExpense', async (req, res, next) => {
+app.post('/api/addItem', async (req, res, next) => {
+  let type = req.query.type
   let { user_id, amount, date, notes, category } = req.body
   let message
   try {
-    const message = await models.expenses.addExpense(user_id, category, amount, notes, date)
+    const message = await models[type].addItem(user_id, category, amount, notes, date)
     return res.json(message)
   } catch(error) {
     return res.status(400).json({ error: error.toString() })

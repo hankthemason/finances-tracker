@@ -5,8 +5,9 @@ import Button from 'react-bootstrap/Button'
 
 export const AddCategory = ({ type, hidden }: AddCategoryProps) => {
   const [newCategory, setNewCategory] = useState<string>()
-  const [error, setError] = useState<boolean>(false)
+  const [isInvalid, setIsInvalid] = useState<boolean>(false)
   const { user } = useAuth()
+  console.log(newCategory)
 
   const handleSubmit = async(e: React.MouseEvent<HTMLElement>) => {
     await fetch(`/api/addCategory`, {
@@ -21,11 +22,12 @@ export const AddCategory = ({ type, hidden }: AddCategoryProps) => {
     }).then(result => {
       if (result.status === 200) {
         console.log('success!')
+        window.location.reload()
       } else {
-        setError(true)
+        setIsInvalid(true)
         console.log('error!')
       }
-    })
+    })    
   }
 
   return (
@@ -36,10 +38,10 @@ export const AddCategory = ({ type, hidden }: AddCategoryProps) => {
           required
           type="text"
           placeholder="new category name"
-          isInvalid={error}
+          isInvalid={isInvalid}
           onChange={(e) => setNewCategory(e.target.value)}>
         </Form.Control>
-        <Form.Control.Feedback type="invalid">please enter a valid category name with no numbers or special characters</Form.Control.Feedback>
+        <Form.Control.Feedback type="invalid">please enter a unique category name with no numbers or special characters</Form.Control.Feedback>
       </Form.Group>
       <Button variant="primary" onClick={handleSubmit}>
         Submit

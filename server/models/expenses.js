@@ -70,7 +70,7 @@ class Expenses {
     }
   } 
 
-  addExpense = async(user_id, category, amount, notes, date) => {
+  addItem = async(user_id, category, amount, notes, date) => {
     const result = await this.pool.query(
       `INSERT INTO expenses (user_id, category_name, amount, notes, timestamp)
       VALUES ($1, $2, $3, $4, $5)
