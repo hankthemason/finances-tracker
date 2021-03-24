@@ -19,7 +19,6 @@ export const Dashboard = () => {
     expenseCategories: [],
     incomeCategories: []
   })
-  console.log(categories)
 
   const getCategories = async(user_id: number) => {
     await fetch(`/api/getCategories?user_id=${user_id}`)
@@ -62,7 +61,8 @@ export const Dashboard = () => {
 
   return(
     <div>
-      <DashboardNavbar items={dashboardItems}/> 
+      <DashboardNavbar items={dashboardItems}/>
+      <div className="wrapper">
       <p>{`Hello, ${user.info.username}!`}</p>
       <DateAndTime />
       <Expenses date={d}/>
@@ -76,6 +76,7 @@ export const Dashboard = () => {
         </Route>
       </Switch>
       <Logout />
+      </div>
     </div>
   )
 }

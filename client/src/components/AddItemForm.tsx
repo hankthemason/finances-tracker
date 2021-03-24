@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button'
 import { BsX } from 'react-icons/bs'
 
 export const AddItemForm = ({ user, categories, type }: AddItemFormProps) => {
-  console.log(type)
+
   const [addCategoryIsHidden, setAddCategoryIsHidden] = useState(true)
   const [state, setState] = useState({
     category: '',

@@ -15,7 +15,6 @@ export const Expenses = (props: ExpensesProps) => {
   const [total, setTotal] = useState<number>(0)
   
   useEffect(() => {
-
     const getTotalExpenses = async() => {
       await fetch(`/api/expenses?user_id=${user.info.user_id}&month=${s}`)
       .then(response => response.json())
@@ -32,7 +31,7 @@ export const Expenses = (props: ExpensesProps) => {
     if (user.info.user_id) {
       getTotalExpenses()
     }
-  }, [user])  
+  }, [])  
 
   return isLoading ? (
     <div>

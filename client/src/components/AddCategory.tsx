@@ -7,8 +7,7 @@ export const AddCategory = ({ type, hidden }: AddCategoryProps) => {
   const [newCategory, setNewCategory] = useState<string>()
   const [isInvalid, setIsInvalid] = useState<boolean>(false)
   const { user } = useAuth()
-  console.log(newCategory)
-
+  
   const handleSubmit = async(e: React.MouseEvent<HTMLElement>) => {
     await fetch(`/api/addCategory`, {
       method: 'POST',

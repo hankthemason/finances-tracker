@@ -24,7 +24,7 @@ export const Income = (props: ExpensesProps) => {
     if (user.info.user_id) {
       getTotalIncome()
     }
-  }, [user])
+  }, [])
   
   total = total ? total : 0
 
