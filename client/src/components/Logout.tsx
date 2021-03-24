@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button'
 export const Logout = () => {
   const { setUser } = useAuth()
 
-  const handleLogout = () => {
+  const handleLogout = async() => {
     localStorage.clear()
     setUser({
       info: {
@@ -16,7 +16,10 @@ export const Logout = () => {
       token: null
     })
   }
+
+  
+
   return (
-    <Button variant="primary" onClick={handleLogout}>Logout</Button>
+    null
   )
 }

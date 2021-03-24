@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { useHistory } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { DashboardNavbar } from './DashboardNavbar'
 import { Logout } from './Logout'
 import { Expenses } from './Expenses'
@@ -12,8 +13,8 @@ import Button from 'react-bootstrap/Button'
 export const Dashboard = () => {
 
   const d = new Date()
-
-  const { user } = useAuth()
+  const history = useHistory()
+  const { user, setUser } = useAuth()
   const [categories, setCategories] = useState({
     expenseCategories: [],
     incomeCategories: []
@@ -40,6 +41,22 @@ export const Dashboard = () => {
     {
       value: 'Add Income',
       path: '/dashboard/addIncome'
+    },
+    { 
+      value: 'Logout',
+      path: '/login',
+      onClick : async() => {
+        localStorage.clear()
+        setUser({
+          info: {
+            user_id: null,
+            email: null,
+            username: null
+          },
+          token: null
+        })
+      },
+      float: 'ml-auto'
     }
   ]
 

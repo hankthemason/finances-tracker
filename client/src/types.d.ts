@@ -78,8 +78,10 @@ interface AddItemFormProps {
 }
 
 interface DashboardItem {
-  value: string
-  path: string
+  value: string,
+  path: string,
+  onClick?: () => Promise<void>,
+  float?: string
 }
 
 interface DashboardNavbarProps {
