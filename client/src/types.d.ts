@@ -67,6 +67,6 @@ interface Expense {
 }
 
 interface AddCategoryProps {
-  type: string
+  type: string,
   hidden: boolean
 }

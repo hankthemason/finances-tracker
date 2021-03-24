@@ -3,10 +3,12 @@ import { useAuth } from '../context/authContext'
 import { AddCategory } from './AddCategory'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import { BsX } from 'react-icons/bs'
 
 export const AddExpense = (props: AddExpenseProps) => {
   const { user } = useAuth()
   const [addCategoryIsHidden, setAddCategoryIsHidden] = useState(true)
+  const [showX, setShowX] = useState(false)
   const [state, setState] = useState({
     category: '',
     amount: 0, 
@@ -61,11 +63,24 @@ export const AddExpense = (props: AddExpenseProps) => {
           </Form.Control>
         </Form.Group>
         <a
-        onClick={(e) => setAddCategoryIsHidden(false)}
+        onClick={(e) => {
+          setAddCategoryIsHidden(false)
+          setShowX(true)
+        }}
         style={{cursor: 'pointer', color: 'blue', textDecoration: 'underline', textDecorationColor: 'blue'}}>
           Add a new category
         </a>
-        <AddCategory hidden={addCategoryIsHidden} type='expenses'/>
+        {showX ? <a 
+          style={{cursor: 'pointer', color: 'blue', textDecoration: 'underline', textDecorationColor: 'blue'}}
+          onClick={(e) => {
+            setAddCategoryIsHidden(true)
+            setShowX(false)
+        }}>
+          <BsX />
+        </a> : null}
+        <AddCategory
+          hidden={addCategoryIsHidden} 
+          type='expenses'/>
         <Form.Group controlId='expenseAmount'>
           <Form.Label>Amount</Form.Label>
           <Form.Control 

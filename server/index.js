@@ -66,6 +66,7 @@ app.post('/api/addCategory', async (req, res) => {
     const message = await models.categories.addCategory(user_id, category_name, type)
     return res.json(message)
   } catch(error) {
+    console.log(error)
     return res.status(400).json({ error: error.toString()})
   }
 })
