@@ -87,3 +87,14 @@ interface DashboardItem {
 interface DashboardNavbarProps {
   items: DashboardItem[]
 }
+
+interface TotalsObj {
+  category_name: string,
+  total: number
+}
+
+interface DonutProps<T> {
+  labelName: keyof T,
+  dataName: keyof T,
+  data: T[]
+}

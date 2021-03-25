@@ -48,6 +48,23 @@ class Income {
     return result.rows[0]
   }
 
+  getCategoryTotals = async (user_id, month) => {
+    try {
+      const result = await this.pool.query (
+        `SELECT category_name, CAST (SUM (amount) AS FLOAT) AS total
+        FROM income
+        WHERE user_id = $1 
+        AND EXTRACT(MONTH FROM timestamp) = $2
+        GROUP BY category_name`,
+        [user_id, month]
+      )
+      console.log(result)
+      return result.rows
+    } catch(err) {
+      console.error(err)
+    }
+  }
+
 }
 
 module.exports = Income

@@ -9,16 +9,23 @@ import { AddItemForm } from './AddItemForm'
 import { useAuth } from '../context/authContext'
 import { DateAndTime } from './Date'
 import Button from 'react-bootstrap/Button'
+import { Donut } from './DonutChart'
 
 export const Dashboard = () => {
 
   const d = new Date()
+  const m = d.getMonth() + 1
+  const month = '0'.concat(m.toString())
+
   const history = useHistory()
   const { user, setUser } = useAuth()
   const [categories, setCategories] = useState({
     expenseCategories: [],
     incomeCategories: []
   })
+  const [expensesCategoryTotals, setExpensesCategoryTotals] = useState<TotalsObj[]>()
+  const [incomeCategoryTotals, setIncomeCategoryTotals] = useState<TotalsObj[]>()
+  console.log(incomeCategoryTotals)
 
   const getCategories = async(user_id: number) => {
     await fetch(`/api/getCategories?user_id=${user_id}`)
@@ -26,9 +33,24 @@ export const Dashboard = () => {
     .then(result => setCategories(result))
   }
 
+  const getExpensesCategoryTotals = async(user_id: number, month: string) => {
+    await fetch(`/api/getExpensesCategoryTotals?user_id=${user_id}&month=${month}`)
+    .then(result => result.json())
+    .then(result => setExpensesCategoryTotals(result))
+  }
+
+  const getIncomeCategoryTotals = async(user_id: number, month: string) => {
+    await fetch(`/api/getIncomeCategoryTotals?user_id=${user_id}&month=${month}`)
+    .then(result => result.json())
+    .then(result => setIncomeCategoryTotals(result))
+  }
+
+
   useEffect(() => {
     if (user.info.user_id) {
       getCategories(user.info.user_id)
+      getExpensesCategoryTotals(user.info.user_id, month)
+      getIncomeCategoryTotals(user.info.user_id, month)
     }
   }, [])
 
@@ -59,6 +81,8 @@ export const Dashboard = () => {
     }
   ]
 
+
+
   return(
     <div>
       <DashboardNavbar items={dashboardItems}/>
@@ -67,6 +91,8 @@ export const Dashboard = () => {
       <DateAndTime />
       <Expenses date={d}/>
       <Income date={d}/>
+      {expensesCategoryTotals && <Donut labelName='category_name' dataName='total' data={expensesCategoryTotals}/>}
+      {incomeCategoryTotals && <Donut labelName='category_name' dataName='total' data={incomeCategoryTotals}/>}
       <Switch>
         <Route path='/dashboard/addExpense'>
           <AddItemForm user={user} type={'expenses'} categories={categories.expenseCategories} />

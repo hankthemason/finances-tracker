@@ -55,6 +55,28 @@ app.get('/api/expenses', async (req, res) => {
   res.json(expenses)
 })
 
+app.get('/api/getExpensesCategoryTotals', async (req, res) => {
+  const user_id  = req.query.user_id
+  const month = req.query.month
+  try {
+    const totals = await models.expenses.getCategoryTotals(user_id, month)
+    return res.json(totals)
+  } catch (error) {
+    return res.status(400).json({ error: error.toString()})
+  }
+})
+
+app.get('/api/getIncomeCategoryTotals', async (req, res) => {
+  const user_id  = req.query.user_id
+  const month = req.query.month
+  try {
+    const totals = await models.income.getCategoryTotals(user_id, month)
+    return res.json(totals)
+  } catch (error) {
+    return res.status(400).json({ error: error.toString()})
+  }
+})
+
 app.get('/api/getCategories', async (req, res) => {
   const categories = await models.categories.getCategories(req.query.user_id)
   let expenseCategories = categories.filter(e => e.type === 'expenses')

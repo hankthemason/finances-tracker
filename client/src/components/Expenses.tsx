@@ -13,7 +13,7 @@ export const Expenses = (props: ExpensesProps) => {
   const s = '0'.concat(m.toString())
 
   const [total, setTotal] = useState<number>(0)
-  
+   
   useEffect(() => {
     const getTotalExpenses = async() => {
       await fetch(`/api/expenses?user_id=${user.info.user_id}&month=${s}`)
