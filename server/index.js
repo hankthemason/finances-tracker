@@ -116,7 +116,7 @@ app.get('/api/income', async (req, res) => {
   res.json(income)
 })
 
-app.post('/register', async (req, res) => {
+app.post('/api/register', async (req, res) => {
   let { username, email, password, password2 } = req.body
 
   
@@ -164,7 +164,7 @@ app.post('/register', async (req, res) => {
   }
 })
 
-app.post("/login", (req, res, next) => {
+app.post("/api/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) throw err;
     if (!user) res.status(400).send({message: 'login failed'});
