@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }: Props) => {
   const [user, setUser] = useState<UserContextObject>(fromStorage ? fromStorage : defaultContext)
 
   const loginUser = (credentials: any) => {
-    return fetch('/login', {
+    return fetch('/api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
