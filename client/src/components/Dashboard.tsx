@@ -8,8 +8,8 @@ import { Income } from './Income'
 import { AddItemForm } from './AddItemForm'
 import { useAuth } from '../context/authContext'
 import { DateAndTime } from './Date'
+import { DashboardHome } from './DashboardHome'
 import Button from 'react-bootstrap/Button'
-import { Donut } from './DonutChart'
 
 export const Dashboard = () => {
 
@@ -25,7 +25,6 @@ export const Dashboard = () => {
   })
   const [expensesCategoryTotals, setExpensesCategoryTotals] = useState<TotalsObj[]>()
   const [incomeCategoryTotals, setIncomeCategoryTotals] = useState<TotalsObj[]>()
-  console.log(incomeCategoryTotals)
 
   const getCategories = async(user_id: number) => {
     await fetch(`/api/getCategories?user_id=${user_id}`)
@@ -91,9 +90,15 @@ export const Dashboard = () => {
       <DateAndTime />
       <Expenses date={d}/>
       <Income date={d}/>
-      {expensesCategoryTotals && <Donut labelName='category_name' dataName='total' data={expensesCategoryTotals}/>}
-      {incomeCategoryTotals && <Donut labelName='category_name' dataName='total' data={incomeCategoryTotals}/>}
       <Switch>
+        <Route path='/dashboard/home'>
+          {expensesCategoryTotals && incomeCategoryTotals &&
+            <DashboardHome 
+              expensesCategoryTotals={expensesCategoryTotals} 
+              incomeCategoryTotals={incomeCategoryTotals} 
+            />   
+          }
+        </Route>
         <Route path='/dashboard/addExpense'>
           <AddItemForm user={user} type={'expenses'} categories={categories.expenseCategories} />
         </Route>

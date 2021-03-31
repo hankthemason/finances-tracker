@@ -98,3 +98,8 @@ interface DonutProps<T> {
   dataName: keyof T,
   data: T[]
 }
+
+interface DashboardHomeProps {
+  expensesCategoryTotals: TotalsObj[],
+  incomeCategoryTotals: TotalsObj[]
+}

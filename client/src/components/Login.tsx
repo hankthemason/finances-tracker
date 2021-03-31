@@ -3,7 +3,6 @@ import { useAuth } from '../context/authContext'
 import { useHistory, Link } from 'react-router-dom'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button'
-//import './Login.css'
 
 export const Login = (props: any) => {
   const { setUser, loginUser } = useAuth()
@@ -19,7 +18,8 @@ export const Login = (props: any) => {
       email,
       password
     }).then(
-      history.push('./dashboard')
+      //this isn't even necessary bc the app.tsx file is responding to the changing environment
+      history.push('/dashboard/home')
     )
   }
 

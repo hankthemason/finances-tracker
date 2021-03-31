@@ -5,7 +5,7 @@ export const DashboardNavbar = ({items}: DashboardNavbarProps) => {
 
   return (
     <Navbar bg="primary" variant="dark">
-      <Navbar.Brand href='/dashboard'>Dashboard</Navbar.Brand>
+      <Navbar.Brand href='/dashboard/home'>Dashboard</Navbar.Brand>
       <Nav className='container-fluid'>
         {items.map(e => (
           <Nav.Link

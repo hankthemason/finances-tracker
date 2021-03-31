@@ -37,7 +37,7 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route exact path={'/'}>
-            {user.token === null ? <Redirect to='/login' /> : <Dashboard />}
+            <Redirect to='/login' />
           </Route>
           <Route path='/preferences'>
             <Preferences />
@@ -46,10 +46,7 @@ function App() {
             <Register setFlash={setFlash}/>
           </Route>
           <Route path='/login'>
-            {user.token === null ? <Login /> : <Redirect to='/dashboard' />}
-          </Route>
-          <Route path='/dashboard'>
-            {user.token !== null ? <Dashboard /> : <Redirect to='/login' />}
+            <Login />
           </Route>
         </Switch>
       </BrowserRouter>
@@ -57,7 +54,7 @@ function App() {
   : 
   <BrowserRouter>
     <Switch>
-      <Route path={['/', 'dashboard']}>
+      <Route path={['/', '/dashboard/home']}>
         <Dashboard />
       </Route> 
     </Switch>
