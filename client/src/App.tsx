@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
 import { useAuth, AuthProvider } from './context/authContext'
-import { Dashboard } from './components/Dashboard'
-import { Login } from './components/Login'
-import { Register } from './components/Register'
-import { Preferences } from './components/Preferences'
+import { Dashboard } from './modules/dashboard/components'
+import { Login } from './modules/login/components/Login'
+import { Register } from './modules/login/components/Register'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -38,9 +37,6 @@ function App() {
         <Switch>
           <Route exact path={'/'}>
             <Redirect to='/login' />
-          </Route>
-          <Route path='/preferences'>
-            <Preferences />
           </Route>
           <Route path='/register'>
             <Register setFlash={setFlash}/>

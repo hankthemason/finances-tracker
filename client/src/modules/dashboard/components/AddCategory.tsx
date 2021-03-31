@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useAuth } from '../context/authContext'
+import { useAuth } from 'context/authContext'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 

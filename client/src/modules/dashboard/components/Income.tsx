@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useAuth } from '../context/authContext'
+import { useAuth } from 'context/authContext'
 
 export const Income = (props: ExpensesProps) => {
   const [isLoading, setIsLoading] = useState(true)

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useAuth } from '../context/authContext'
+import { useAuth } from 'context/authContext'
 
 export const Expenses = (props: ExpensesProps) => {
 

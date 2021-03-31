@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom'
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { DashboardNavbar } from './DashboardNavbar'
-import { Logout } from './Logout'
+import { Logout } from 'modules/login/components/Logout'
 import { Expenses } from './Expenses'
 import { Income } from './Income'
 import { AddItemForm } from './AddItemForm'
-import { useAuth } from '../context/authContext'
+import { useAuth } from 'context/authContext' 
 import { DateAndTime } from './Date'
 import { DashboardHome } from './DashboardHome'
 import Button from 'react-bootstrap/Button'
