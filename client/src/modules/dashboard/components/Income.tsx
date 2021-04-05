@@ -5,19 +5,20 @@ export const Income = (props: ExpensesProps) => {
   const [isLoading, setIsLoading] = useState(true)
 
   const { user } = useAuth()
+  const { date } = props
   
-  const m = new Date().getMonth() + 1
+  const m = date.getMonth() + 1
   const s = '0'.concat(m.toString())
-
-  let [total, setTotal] = useState<number>()
+  const y = date.getFullYear()
+  let [total, setTotal] = useState<string>('')
 
   useEffect(() => {
 
     const getTotalIncome = async() => {
-      await fetch(`/api/income?user_id=${user.info.user_id}&month=${s}`)
+      await fetch(`/api/income?user_id=${user.info.user_id}&month=${s}&year=${y}`)
       .then(response => response.json())
       .then(result => {
-        setTotal(parseFloat(result))
+        setTotal(result)
       }).then(result => setIsLoading(false))
     }
 
@@ -26,7 +27,7 @@ export const Income = (props: ExpensesProps) => {
     }
   }, [])
   
-  total = total ? total : 0
+  total = total ? total : '$0.00'
 
   return isLoading ? (
     <div>
@@ -34,7 +35,7 @@ export const Income = (props: ExpensesProps) => {
     </div>
   ) : (
     <div>
-      {`Your monthly income so far is: $${total}.`}
+      {`Your monthly income so far is: ${total}.`}
     </div>
   )
 }

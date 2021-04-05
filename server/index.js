@@ -51,7 +51,8 @@ app.get('/users', models.users.getUsers)
 app.get('/api/expenses', async (req, res) => {
   const user_id = req.query.user_id
   const month = req.query.month
-  const expenses = await models.expenses.getTotalExpensesByMonth(user_id, month)
+  const year = req.query.year
+  const expenses = await models.expenses.getCurrentMonthExpenses(user_id, month, year)
   res.json(expenses)
 })
 
@@ -112,7 +113,9 @@ app.post('/api/addItem', async (req, res, next) => {
 app.get('/api/income', async (req, res) => {
   const user_id = req.query.user_id
   const month = req.query.month
-  const income = await models.income.getTotalIncomeByMonth(user_id, month)
+  const year = req.query.year
+  console.log(year)
+  const income = await models.income.getCurrentMonthIncome(user_id, month, year)
   res.json(income)
 })
 

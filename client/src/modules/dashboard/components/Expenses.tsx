@@ -11,16 +11,17 @@ export const Expenses = (props: ExpensesProps) => {
   
   const m = date.getMonth() + 1
   const s = '0'.concat(m.toString())
+  const y = date.getFullYear()
 
-  const [total, setTotal] = useState<number>(0)
+  const [total, setTotal] = useState<string>('')
    
   useEffect(() => {
     const getTotalExpenses = async() => {
-      await fetch(`/api/expenses?user_id=${user.info.user_id}&month=${s}`)
+      await fetch(`/api/expenses?user_id=${user.info.user_id}&month=${s}&year=${y}`)
       .then(response => response.json())
       .then(result => {
         if (result) {
-          setTotal(parseFloat(result))
+          setTotal(result)
         } 
       })
       .then(result => {
@@ -39,7 +40,7 @@ export const Expenses = (props: ExpensesProps) => {
     </div>
   ) : (
     <div>
-      {`Your monthly expenses so far are: $${total}.`}
+      {`Your monthly expenses so far are: ${total}.`}
     </div>
   )
 }

@@ -55,15 +55,17 @@ class Expenses {
     }
   }
 
-  getTotalExpensesByMonth = async (user_id, month) => {
+  getCurrentMonthExpenses = async (user_id, month, year) => {
     try {
       const result = await this.pool.query (
-        `SELECT SUM(amount) AS TOTAL
+        `SELECT CAST(SUM(amount) AS MONEY) AS total
         FROM expenses 
         WHERE user_id = $1
-        AND EXTRACT(MONTH FROM timestamp) = $2`, 
-        [user_id, month]
+        AND EXTRACT(MONTH FROM timestamp) = $2
+        AND EXTRACT(YEAR FROM timestamp) = $3`,
+        [user_id, month, year]
       )
+      console.log(result.rows[0].total)
       return result.rows[0].total
     } catch(err) {
       console.error(err)
