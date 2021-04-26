@@ -13,7 +13,7 @@ export const Register = ({ setFlash }: RegisterProps) => {
   let history = useHistory();
   
   const registerUser = async (registrationCredentials: RegistrationCredentials) => {
-    return fetch('http://localhost:5000/register', {
+    return fetch('/api/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -28,6 +28,7 @@ export const Register = ({ setFlash }: RegisterProps) => {
         history.push('/login')
       }
       if (result.errors) {
+        console.log(result.errors)
         setErrors(result.errors.reduce((acc: {}, item: Error) => {
           let {type, message} = item
           return {...acc, [type]: message}

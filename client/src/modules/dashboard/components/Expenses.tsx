@@ -13,7 +13,7 @@ export const Expenses = (props: ExpensesProps) => {
   const s = '0'.concat(m.toString())
   const y = date.getFullYear()
 
-  const [total, setTotal] = useState<string>('')
+  let [total, setTotal] = useState<string>('')
    
   useEffect(() => {
     const getTotalExpenses = async() => {
@@ -33,6 +33,8 @@ export const Expenses = (props: ExpensesProps) => {
       getTotalExpenses()
     }
   }, [])  
+
+  total = total ? total : '$0.00'
 
   return isLoading ? (
     <div>
