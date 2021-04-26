@@ -138,6 +138,15 @@ app.post('/api/register', async (req, res) => {
       message: "This email address has already been registered."})
   }
 
+  const regex = `^(?=.{1,64}@)((?:[A-Za-z0-9!#$%&'*+-/=?^\{\|\}~]+|"(?:\\"|\\\\|[A-Za-z0-9\.!#\$%&'\*\+\-/=\?\^_{|}~ (),:;<>@[].])+")(?:.(?:[A-Za-z0-9!#$%&'*+-/=?^\{\|\}~]+|"(?:\\"|\\\\|[A-Za-z0-9\.!#\$%&'\*\+\-/=\?\^_{|}~ (),:;<>@[].])+")))@(?=.{1,255}.)((?:[A-Za-z0-9]+(?:(?:[A-Za-z0-9-][A-Za-z0-9])?).)+[A-Za-z]{2,})|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,6}(0|)])$`
+
+  if (!email.match(regex)) {
+    errors.push({
+      type: "email",
+      message: "Must be a valid email address."
+    })
+  }
+
   if (password.length < 6) {
     errors.push({ 
       type: "password",
