@@ -114,7 +114,6 @@ app.get('/api/income', async (req, res) => {
   const user_id = req.query.user_id
   const month = req.query.month
   const year = req.query.year
-  console.log(year)
   const income = await models.income.getCurrentMonthIncome(user_id, month, year)
   res.json(income)
 })
@@ -122,7 +121,6 @@ app.get('/api/income', async (req, res) => {
 app.post('/api/register', async (req, res) => {
   let { username, email, password, password2 } = req.body
 
-  
   //this might not even be necessary because I think the 
   //frontend component prevents any blank fields 
   let errors = []

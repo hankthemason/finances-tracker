@@ -65,7 +65,6 @@ class Expenses {
         AND EXTRACT(YEAR FROM timestamp) = $3`,
         [user_id, month, year]
       )
-      console.log(result.rows[0].total)
       return result.rows[0].total
     } catch(err) {
       console.error(err)

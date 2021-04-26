@@ -3,8 +3,7 @@ class Income {
     this.pool = pool
   }
 
-  init = async() => {
-    try {
+  init = async() => { try {
       await this.pool.query(
         `CREATE TABLE IF NOT EXISTS income (
             income_id serial PRIMARY KEY,
@@ -59,7 +58,6 @@ class Income {
         GROUP BY category_name`,
         [user_id, month]
       )
-      console.log(result)
       return result.rows
     } catch(err) {
       console.error(err)
