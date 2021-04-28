@@ -8,6 +8,7 @@ export const Login = (props: any) => {
   const { setUser, loginUser } = useAuth()
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
+  const [errors, setErrors] = useState<boolean>()
   const history = useHistory()
 
   const handleSubmit = (
@@ -17,10 +18,15 @@ export const Login = (props: any) => {
     loginUser({
       email,
       password
-    }).then(
-      //this isn't even necessary bc the app.tsx file is responding to the changing environment
-      history.push('/dashboard/home')
-    )
+    }).then((result: any) => {
+      console.log(result)
+      if (result.message === 'login error') {
+        setErrors(true)
+      } else {
+        //this isn't even necessary bc the app.tsx file is responding to the changing environment
+        history.push('/dashboard/home')
+      }
+    })
   }
 
   return(
@@ -30,10 +36,14 @@ export const Login = (props: any) => {
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
-            <Form.Control 
+            <Form.Control
+              isInvalid={errors ? true : false} 
               type="email" 
               placeholder="Enter email" 
               onChange={e => setEmail(e.target.value)}/>
+          <Form.Control.Feedback type="invalid">
+            {errors ? 'either you don\'t have an account or the email and password do not match' : null}
+          </Form.Control.Feedback>
             <Form.Text className="text-muted">
               umm..
             </Form.Text>

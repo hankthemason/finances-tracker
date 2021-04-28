@@ -89,8 +89,6 @@ export const AuthProvider = ({ children }: Props) => {
         })
         localStorage.setItem('token', JSON.stringify(result.token))
         localStorage.setItem('user', JSON.stringify(result.user))
-      } else {
-        console.log('yo')
       }
       return result
     })
