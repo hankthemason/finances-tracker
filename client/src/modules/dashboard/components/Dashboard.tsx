@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom'
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect, BrowserRouter } from 'react-router-dom';
 import { DashboardNavbar } from './DashboardNavbar'
 import { Logout } from 'modules/login/components/Logout'
 import { Expenses } from './Expenses'
@@ -11,8 +11,7 @@ import { DateAndTime } from './Date'
 import { DashboardHome } from './DashboardHome'
 import Button from 'react-bootstrap/Button'
 
-const Dashboard = () => {
-
+export const Dashboard = () => {
   const d = new Date()
   const m = d.getMonth() + 1
   const month = '0'.concat(m.toString())
@@ -23,8 +22,6 @@ const Dashboard = () => {
     expenseCategories: [],
     incomeCategories: []
   })
-  const [expensesCategoryTotals, setExpensesCategoryTotals] = useState<TotalsObj[]>()
-  const [incomeCategoryTotals, setIncomeCategoryTotals] = useState<TotalsObj[]>()
 
   const getCategories = async(user_id: number) => {
     await fetch(`/api/getCategories?user_id=${user_id}`)
@@ -32,24 +29,11 @@ const Dashboard = () => {
     .then(result => setCategories(result))
   }
 
-  const getExpensesCategoryTotals = async(user_id: number, month: string) => {
-    await fetch(`/api/getExpensesCategoryTotals?user_id=${user_id}&month=${month}`)
-    .then(result => result.json())
-    .then(result => setExpensesCategoryTotals(result))
-  }
-
-  const getIncomeCategoryTotals = async(user_id: number, month: string) => {
-    await fetch(`/api/getIncomeCategoryTotals?user_id=${user_id}&month=${month}`)
-    .then(result => result.json())
-    .then(result => setIncomeCategoryTotals(result))
-  }
-
-
   useEffect(() => {
     if (user.info.user_id) {
       getCategories(user.info.user_id)
-      getExpensesCategoryTotals(user.info.user_id, month)
-      getIncomeCategoryTotals(user.info.user_id, month)
+//    getExpensesCategoryTotals(user.info.user_id, month)
+//    getIncomeCategoryTotals(user.info.user_id, month)
     }
   }, [])
 
@@ -80,8 +64,6 @@ const Dashboard = () => {
     }
   ]
 
-
-
   return(
     <div>
       <DashboardNavbar items={dashboardItems}/>
@@ -90,14 +72,10 @@ const Dashboard = () => {
       <DateAndTime />
       <Expenses date={d}/>
       <Income date={d}/>
+      <BrowserRouter>
       <Switch>
         <Route path='/dashboard/home'>
-          {expensesCategoryTotals && incomeCategoryTotals &&
-            <DashboardHome 
-              expensesCategoryTotals={expensesCategoryTotals} 
-              incomeCategoryTotals={incomeCategoryTotals} 
-            />   
-          }
+          <DashboardHome />   
         </Route>
         <Route path='/dashboard/addExpense'>
           <AddItemForm user={user} type={'expenses'} categories={categories.expenseCategories} />
@@ -106,6 +84,7 @@ const Dashboard = () => {
           <AddItemForm user={user} type={'income'} categories={categories.incomeCategories} />
         </Route>
       </Switch>
+      </BrowserRouter>
       <Logout />
       </div>
     </div>

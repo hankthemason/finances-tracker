@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom'
+import { BrowserRouter, useHistory } from 'react-router-dom'
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { DashboardNavbar } from './DashboardNavbar'
 import { Logout } from 'modules/login/components/Logout'
@@ -19,39 +19,6 @@ export const Dashboard = () => {
 
   const history = useHistory()
   const { user, setUser } = useAuth()
-  const [categories, setCategories] = useState({
-    expenseCategories: [],
-    incomeCategories: []
-  })
-  const [expensesCategoryTotals, setExpensesCategoryTotals] = useState<TotalsObj[]>()
-  const [incomeCategoryTotals, setIncomeCategoryTotals] = useState<TotalsObj[]>()
-
-  const getCategories = async(user_id: number) => {
-    await fetch(`/api/getCategories?user_id=${user_id}`)
-    .then(result => result.json())
-    .then(result => setCategories(result))
-  }
-
-  const getExpensesCategoryTotals = async(user_id: number, month: string) => {
-    await fetch(`/api/getExpensesCategoryTotals?user_id=${user_id}&month=${month}`)
-    .then(result => result.json())
-    .then(result => setExpensesCategoryTotals(result))
-  }
-
-  const getIncomeCategoryTotals = async(user_id: number, month: string) => {
-    await fetch(`/api/getIncomeCategoryTotals?user_id=${user_id}&month=${month}`)
-    .then(result => result.json())
-    .then(result => setIncomeCategoryTotals(result))
-  }
-
-
-  useEffect(() => {
-    if (user.info.user_id) {
-      getCategories(user.info.user_id)
-      getExpensesCategoryTotals(user.info.user_id, month)
-      getIncomeCategoryTotals(user.info.user_id, month)
-    }
-  }, [])
 
   const dashboardItems = [
     {
@@ -80,24 +47,13 @@ export const Dashboard = () => {
     }
   ]
 
-
-
   return(
     <div>
       <DashboardNavbar items={dashboardItems}/>
-      <div className="wrapper">
-      <p>{`Hello, ${user.info.username}!`}</p>
-      <DateAndTime />
-      <Expenses date={d}/>
-      <Income date={d}/>
+      {/* <BrowserRouter>
       <Switch>
         <Route path='/dashboard/home'>
-          {expensesCategoryTotals && incomeCategoryTotals &&
-            <DashboardHome 
-              expensesCategoryTotals={expensesCategoryTotals} 
-              incomeCategoryTotals={incomeCategoryTotals} 
-            />   
-          }
+          <DashboardHome />   
         </Route>
         <Route path='/dashboard/addExpense'>
           <AddItemForm user={user} type={'expenses'} categories={categories.expenseCategories} />
@@ -106,8 +62,8 @@ export const Dashboard = () => {
           <AddItemForm user={user} type={'income'} categories={categories.incomeCategories} />
         </Route>
       </Switch>
+      </BrowserRouter> */}
       <Logout />
-      </div>
     </div>
   )
 }

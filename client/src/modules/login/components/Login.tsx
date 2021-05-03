@@ -11,9 +11,7 @@ export const Login = (props: any) => {
   const [errors, setErrors] = useState<boolean>()
   const history = useHistory()
 
-  const handleSubmit = (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     loginUser({
       email,
@@ -23,7 +21,6 @@ export const Login = (props: any) => {
       if (result.message === 'login error') {
         setErrors(true)
       } else {
-        //this isn't even necessary bc the app.tsx file is responding to the changing environment
         history.push('/dashboard/home')
       }
     })
