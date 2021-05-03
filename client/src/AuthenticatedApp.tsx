@@ -1,7 +1,7 @@
 import { DashboardHome } from 'modules/dashboard/components/DashboardHome';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react'
-import { Dashboard } from './modules/dashboard/components'
+import Dashboard from 'modules/dashboard/components'
 import { useAuth } from 'context/authContext'
 import { AddItemForm } from 'modules/dashboard/components/AddItemForm'
 import { Login } from 'modules/login/components/Login'

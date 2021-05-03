@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { useAuth, AuthProvider } from './context/authContext'
 import { AuthenticatedApp } from './AuthenticatedApp'
-import { Login } from './modules/login/components/Login'
-import { Register } from './modules/login/components/Register'
+import { Login, Register } from './modules/login/components'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -43,6 +42,9 @@ function App() {
           </Route>
           <Route path='/login'>
             <Login />
+          </Route>
+          <Route path='/dashboard'>
+            <Redirect to='/login'/>
           </Route>
         </Switch>
     </div>
