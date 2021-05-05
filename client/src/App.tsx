@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { useAuth, AuthProvider } from './context/authContext'
 import { AuthenticatedApp } from './AuthenticatedApp'
 import { Login, Register } from './modules/login/components'
