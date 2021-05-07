@@ -9,6 +9,10 @@ interface RegisterProps {
   setFlash: (s: string) => void
 }
 
+interface LoginProps {
+  loginUser: ({email: string, password: string}) => promise
+}
+
 interface Error {
   type: string,
   message: string
@@ -102,4 +106,15 @@ interface DonutProps<T> {
 interface DashboardHomeProps {
   expensesCategoryTotals: TotalsObj[],
   incomeCategoryTotals: TotalsObj[]
+}
+
+interface errorObj {
+  type: string,
+  message: string
+}
+
+interface LoginFormProps {
+  onSubmit: (email: string, password: string) => void,
+  error: errorObj | undefined,
+  setError: (error: errorObj) => void
 }
