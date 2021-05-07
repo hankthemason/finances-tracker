@@ -7,7 +7,7 @@ import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-  const { user } = useAuth()
+  const { user, loginUser } = useAuth()
   
   const [flash, setFlash] = useState<string>('')
   useEffect(() => {
@@ -27,7 +27,6 @@ function App() {
   return (
   !user.token ?
     <div className="wrapper">
-      {console.log('unauth')} 
       <h1>Income/Expenses Tracker</h1>
       {flash && 
       <div>
@@ -41,7 +40,7 @@ function App() {
             <Register setFlash={setFlash}/>
           </Route>
           <Route path='/login'>
-            <Login />
+            <Login loginUser={loginUser} />
           </Route>
           <Route path='/dashboard'>
             <Redirect to='/login'/>
@@ -50,15 +49,6 @@ function App() {
     </div>
   : 
     <AuthenticatedApp />
-  //<BrowserRouter>
-    //{console.log('auth')}
-    //<Switch>
-      //<Route path={'/login'}>
-        //{console.log('hey')}
-        //<Dashboard />
-      //</Route>
-    //</Switch>
-  //</BrowserRouter>        
   )
 }
 

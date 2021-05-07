@@ -1,29 +1,20 @@
-import React, { useState } from 'react';
-import { useAuth } from 'context/authContext'
-import { useHistory, Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button'
 
-export const Login = ({ loginUser }: LoginProps) => {
-  const { setUser } = useAuth()
-  const [email, setEmail] = useState<string>();
-  const [password, setPassword] = useState<string>();
-  const [errors, setErrors] = useState<boolean>()
-  const history = useHistory()
+interface LoginFormProps {
+  onSubmit: (email: string, password: string) => void,
+  errors: boolean
+}
+
+export const LoginForm = ({onSubmit, errors}: LoginFormProps) => {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    loginUser({
-      email,
-      password
-    }).then((result: any) => {
-      console.log(result)
-      if (result.message === 'login error') {
-        setErrors(true)
-      } else {
-        history.push('/dashboard/home')
-      }
-    })
+    e.preventDefault()
+    onSubmit(email, password)
   }
 
   return(
@@ -37,7 +28,8 @@ export const Login = ({ loginUser }: LoginProps) => {
               isInvalid={errors ? true : false} 
               type="email" 
               placeholder="Enter email" 
-              onChange={e => setEmail(e.target.value)}/>
+              onChange={e => setEmail(e.target.value)}
+              value={email}/>
           <Form.Control.Feedback type="invalid">
             {errors ? 'either you don\'t have an account or the email and password do not match' : null}
           </Form.Control.Feedback>
@@ -51,7 +43,7 @@ export const Login = ({ loginUser }: LoginProps) => {
               type="password" 
               placeholder="Password" 
               onChange={e => setPassword(e.target.value)}
-            />
+              value={password}/>
           </Form.Group>
           <Button variant="primary" type="submit">
             Submit
