@@ -1,25 +1,25 @@
 import React, { useState } from 'react';
 import { useAuth } from 'context/authContext'
-import { useHistory, Link } from 'react-router-dom'
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button'
+import { useHistory } from 'react-router-dom'
+import { LoginForm } from 'modules/login/components/LoginForm'
 
-export const Login = ({ loginUser }: LoginProps) => {
-  const { setUser } = useAuth()
-  const [email, setEmail] = useState<string>();
-  const [password, setPassword] = useState<string>();
-  const [errors, setErrors] = useState<boolean>()
+export const Login = (props: any) => {
+  const { setUser, loginUser } = useAuth()
+
+  const [error, setError] = useState<errorObj | undefined>(undefined)
   const history = useHistory()
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = (email: string, password: string) => {
     loginUser({
       email,
       password
     }).then((result: any) => {
       console.log(result)
       if (result.message === 'login error') {
-        setErrors(true)
+        setError({
+          type: 'server error',
+          message: 'either you don\'t have an account or the email and password do not match'
+        })
       } else {
         history.push('/dashboard/home')
       }
@@ -27,40 +27,6 @@ export const Login = ({ loginUser }: LoginProps) => {
   }
 
   return(
-    <div className="login-wrapper">
-      <h1>Please Log In</h1>
-      <div className='form-wrapper'>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control
-              isInvalid={errors ? true : false} 
-              type="email" 
-              placeholder="Enter email" 
-              onChange={e => setEmail(e.target.value)}/>
-          <Form.Control.Feedback type="invalid">
-            {errors ? 'either you don\'t have an account or the email and password do not match' : null}
-          </Form.Control.Feedback>
-            <Form.Text className="text-muted">
-              umm..
-            </Form.Text>
-          </Form.Group>
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control 
-              type="password" 
-              placeholder="Password" 
-              onChange={e => setPassword(e.target.value)}
-            />
-          </Form.Group>
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
-          <div>
-            <Link to='/register'>new user? click here to register</Link>
-          </div>
-        </Form>
-      </div>
-    </div>
+    <LoginForm onSubmit={handleSubmit} error={error} setError={setError} />
   )
 }

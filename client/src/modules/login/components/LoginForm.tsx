@@ -3,35 +3,40 @@ import { Link } from 'react-router-dom'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button'
 
-interface LoginFormProps {
-  onSubmit: (email: string, password: string) => void,
-  errors: boolean
-}
-
-export const LoginForm = ({onSubmit, errors}: LoginFormProps) => {
+export const LoginForm = ({onSubmit}: LoginFormProps) => {
   const [email, setEmail] = useState<string>('');
+  const [error, setError] = useState<errorObj | undefined>(undefined)
   const [password, setPassword] = useState<string>('');
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    onSubmit(email, password)
+    if (email && password) {
+      onSubmit(email, password)
+    } else { 
+      setError({
+        type: 'client',
+        message: "you must enter an email and password"
+      })
+    }
   }
 
   return(
     <div className="login-wrapper">
       <h1>Please Log In</h1>
       <div className='form-wrapper'>
-        <Form onSubmit={handleSubmit}>
+        <Form 
+          onSubmit={handleSubmit}
+          data-testid="form">
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control
-              isInvalid={errors ? true : false} 
+              isInvalid={error !== undefined ? true : false} 
               type="email" 
               placeholder="Enter email" 
               onChange={e => setEmail(e.target.value)}
               value={email}/>
           <Form.Control.Feedback type="invalid">
-            {errors ? 'either you don\'t have an account or the email and password do not match' : null}
+            {error !== undefined ? error.message : null}
           </Form.Control.Feedback>
             <Form.Text className="text-muted">
               umm..
