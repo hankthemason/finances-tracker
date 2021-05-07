@@ -13,4 +13,6 @@ This is a full-stack personal budgeting app.  Users can define their own categor
 
 * [React.js](https://reactjs.org/)
 * [Chart.js](https://www.chartjs.org/)
+* [TypeScript](https://www.typescriptlang.org/)
+* [Node.js](https://nodejs.org/en/)
 * [PostgreSQL](https://www.postgresql.org/)
