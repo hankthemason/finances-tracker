@@ -38,9 +38,6 @@ export const LoginForm = ({onSubmit}: LoginFormProps) => {
           <Form.Control.Feedback type="invalid">
             {error !== undefined ? error.message : null}
           </Form.Control.Feedback>
-            <Form.Text className="text-muted">
-              umm..
-            </Form.Text>
           </Form.Group>
           <Form.Group controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
