@@ -59,8 +59,9 @@ app.get('/api/expenses', async (req, res) => {
 app.get('/api/getExpensesCategoryTotals', async (req, res) => {
   const user_id  = req.query.user_id
   const month = req.query.month
+  const year = req.query.year
   try {
-    const totals = await models.expenses.getCategoryTotals(user_id, month)
+    const totals = await models.expenses.getCategoryTotals(user_id, month, year)
     return res.json(totals)
   } catch (error) {
     return res.status(400).json({ error: error.toString()})
@@ -70,8 +71,9 @@ app.get('/api/getExpensesCategoryTotals', async (req, res) => {
 app.get('/api/getIncomeCategoryTotals', async (req, res) => {
   const user_id  = req.query.user_id
   const month = req.query.month
+  const year = req.query.year
   try {
-    const totals = await models.income.getCategoryTotals(user_id, month)
+    const totals = await models.income.getCategoryTotals(user_id, month, year)
     return res.json(totals)
   } catch (error) {
     return res.status(400).json({ error: error.toString()})

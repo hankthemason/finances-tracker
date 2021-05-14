@@ -11,18 +11,19 @@ export const DashboardHome = () => {
   const d = new Date()
   const m = d.getMonth() + 1
   const month = '0'.concat(m.toString())
+  const year = d.getFullYear().toString()
 
   const [expensesCategoryTotals, setExpensesCategoryTotals] = useState<TotalsObj[]>()
   const [incomeCategoryTotals, setIncomeCategoryTotals] = useState<TotalsObj[]>()
   
-  const getExpensesCategoryTotals = async(user_id: number, month: string) => {
-    await fetch(`/api/getExpensesCategoryTotals?user_id=${user_id}&month=${month}`)
+  const getExpensesCategoryTotals = async(user_id: number, month: string, year: string) => {
+    await fetch(`/api/getExpensesCategoryTotals?user_id=${user_id}&month=${month}&year=${year}`)
     .then(result => result.json())
     .then(result => setExpensesCategoryTotals(result))
   }
 
-  const getIncomeCategoryTotals = async(user_id: number, month: string) => {
-    await fetch(`/api/getIncomeCategoryTotals?user_id=${user_id}&month=${month}`)
+  const getIncomeCategoryTotals = async(user_id: number, month: string, year: string) => {
+    await fetch(`/api/getIncomeCategoryTotals?user_id=${user_id}&month=${month}&year=${year}`)
     .then(result => result.json())
     .then(result => setIncomeCategoryTotals(result))
   }
@@ -30,8 +31,8 @@ export const DashboardHome = () => {
   useEffect(() => {
     if (user.info.user_id) {
       //getCategories(user.info.user_id)
-      getExpensesCategoryTotals(user.info.user_id, month)
-      getIncomeCategoryTotals(user.info.user_id, month)
+      getExpensesCategoryTotals(user.info.user_id, month, year)
+      getIncomeCategoryTotals(user.info.user_id, month, year)
     }
   }, [])
   return (

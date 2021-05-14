@@ -71,15 +71,16 @@ class Expenses {
     }
   }
   
-  getCategoryTotals = async (user_id, month) => {
+  getCategoryTotals = async (user_id, month, year) => {
     try {
       const result = await this.pool.query (
         `SELECT category_name, CAST (SUM (amount) AS FLOAT) AS total
         FROM expenses
         WHERE user_id = $1 
         AND EXTRACT(MONTH FROM timestamp) = $2
+        AND EXTRACT(YEAR FROM timestamp) = $3
         GROUP BY category_name`,
-        [user_id, month]
+        [user_id, month, year]
       )
       return result.rows
     } catch(err) {
