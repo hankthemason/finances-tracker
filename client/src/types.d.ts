@@ -52,7 +52,7 @@ type AuthContextType = {
 }
 
 interface ExpensesProps {
-  date: Date
+  total: string
 }
 
 type Category = {
@@ -118,4 +118,14 @@ interface LoginFormProps {
   onSubmit: (email: string, password: string) => void,
   error: errorObj | undefined,
   setError: (error: errorObj) => void
+}
+
+interface CategoryTotalsObj {
+  category_name: string,
+  total: string
+}
+
+interface UserFinancesInfo {
+  total: string,
+  category_totals: CategoryTotalsObj[]
 }

@@ -39,6 +39,29 @@ class Expenses {
     }
   }
 
+  getUserExpensesInfo = async(user_id, month, year) => {
+    try {
+      const result = await this.pool.query (
+        `SELECT
+        CAST (SUM (x.total) AS MONEY) AS total,
+        json_agg(json_build_object('category_name', x.category_name, 'total', x.total)) AS category_totals
+        FROM (
+          SELECT 
+            category_name, CAST (SUM (amount) AS MONEY) AS total
+          FROM expenses
+          WHERE user_id = $1
+          AND EXTRACT(MONTH FROM timestamp) = $2
+          AND EXTRACT(YEAR FROM timestamp) = $3
+          GROUP BY category_name) AS x
+          `, 
+        [user_id, month, year]
+      )
+      return result.rows[0]
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
   getExpensesByMonth = async (user_id, month) => {
     try {
       const result = await this.pool.query (

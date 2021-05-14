@@ -1,8 +1,8 @@
 import { Doughnut } from "react-chartjs-2";
 
-export const Donut = ({labelName, dataName, data}: DonutProps<TotalsObj>) => {
+export const Donut = ({labelName, dataName, data}: DonutProps<CategoryTotalsObj>) => {
   let labels = data.map(e => e[labelName])
-  let dataSet = data.map(e => e[dataName])
+  let dataSet = data.map(e => Number(e[dataName].replace(/[^0-9.-]+/g,"")))
 
   const colors = [
     'rgb(239, 71, 111)',
