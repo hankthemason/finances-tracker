@@ -33,6 +33,9 @@ export const AuthenticatedApp = () => {
       <Dashboard />
       <div className='wrapper'>
         <Switch>
+          <Route exact path='/'>
+            <Redirect to='/dashboard/home' />
+          </Route>
           <Route path='/dashboard/home'>
             <DashboardHome />
           </Route>
