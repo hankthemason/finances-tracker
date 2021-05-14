@@ -94,36 +94,6 @@ export const AuthProvider = ({ children }: Props) => {
     })
   }
 
-  // useEffect(() => {
-  //   //1. check session storage for a token
-  //   //2. if there's a token, set that
-  //   function getToken() {
-  //     var tokenStr = localStorage.getItem('token');
-  //     if (tokenStr) {
-  //       setToken(tokenStr)
-  //     }
-  //     try {
-  //       return tokenStr
-  //     } catch (ex) {
-  //       return null; // or do some other error handling
-  //     }
-  //   }
-  //   getToken()
-
-  //   if (token && token != '') {
-  //     localStorage.setItem('token', token)
-  //   }
-
-  // }, [])
-
-  // const { decodedToken, isExpired, reEvaluateToken } = useJwt(token);
-
-  // useEffect(() => {
-  //   if (decodedToken) {
-  //     setUser(decodedToken.user)
-  //   }
-  // }, [decodedToken])
-    
   return (
     <AuthContext.Provider value={{user, setUser, loginUser}}>
       {children}

@@ -1,10 +1,9 @@
 import React from 'react'
 import { screen, render, fireEvent, cleanup } from '@testing-library/react'
-import { renderWithRouter, customRender } from 'utils/test-utils'
+import { renderWithRouter } from 'utils/test-utils'
 
 import { Login } from 'modules/login/components/Login'
 import { LoginForm } from 'modules/login/components/LoginForm'
-import { isExportDeclaration } from 'typescript'
 
 describe("login form", () => {
 

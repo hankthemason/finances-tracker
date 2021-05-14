@@ -21,6 +21,7 @@ interface Error {
 type Errors = Error[]
 
 interface ErrorObj {
+  username?: string,
   password?: string,
   password2?: string,
   email?: string,
