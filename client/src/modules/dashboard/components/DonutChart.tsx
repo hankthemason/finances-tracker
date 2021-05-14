@@ -1,4 +1,5 @@
 import { Doughnut } from "react-chartjs-2";
+import { isFunctionDeclaration } from "typescript";
 
 export const Donut = ({labelName, dataName, data}: DonutProps<CategoryTotalsObj>) => {
   let labels = data.map(e => e[labelName])
@@ -24,10 +25,24 @@ export const Donut = ({labelName, dataName, data}: DonutProps<CategoryTotalsObj>
       }
     ]
   }
+
+  const options = {
+    tooltips: {
+      enabled: true,
+      callbacks: {
+        label: function(tooltipItems:any, data:any) {
+          let i = tooltipItems.index
+          let l = data.labels[i]
+          let amount = data.datasets[0].data[i].toFixed(2)
+          return `${l}: $${amount}`
+        }
+      }
+    }
+  }
   
   return (
     <div style={{width: '400px'}} className='donut-wrapper'>
-      <Doughnut data={chart}/>
+      <Doughnut data={chart} options={options}/>
     </div>
   )
 }
