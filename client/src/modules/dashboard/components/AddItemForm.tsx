@@ -1,10 +1,16 @@
 import { useState } from 'react'
+import { useHistory } from 'react-router-dom'
+import { GetUserInfo } from 'context/userInfoContext'
 import Form from 'react-bootstrap/Form'
 import { AddCategory } from './AddCategory'
 import Button from 'react-bootstrap/Button'
 import { BsX } from 'react-icons/bs'
 
 export const AddItemForm = ({ user, categories, type }: AddItemFormProps) => {
+
+  const history = useHistory()    
+    
+  const { updateUserExpensesInfo, updateUserIncomeInfo } = GetUserInfo()
 
   const [addCategoryIsHidden, setAddCategoryIsHidden] = useState(true)
   const [state, setState] = useState({
@@ -19,29 +25,32 @@ export const AddItemForm = ({ user, categories, type }: AddItemFormProps) => {
   })
   
   const [validated, setValidated] = useState(false)
-
-  
+  console.log(type)
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     const form = e.currentTarget;
+    e.preventDefault()
     if (form.checkValidity() === true) {
-      
       await fetch(`/api/addItem?type=${type}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(state)
-      }).then(result => {
+      }).then(async (result) => {
         console.log(result)
         if (result.status === 200) {
           console.log('success!')
+          const res = type === 'expenses' ? updateUserExpensesInfo() : updateUserIncomeInfo()
+          return res
         } else {
           console.log('error!')
         }
+      }).then(result => {
+        if (result !== undefined) {
+          window.location.reload()
+        }
       })
-
     } else {
-      e.preventDefault();
       e.stopPropagation();
     } 
     setValidated(true);
@@ -88,8 +97,7 @@ export const AddItemForm = ({ user, categories, type }: AddItemFormProps) => {
           <Form.Label>Amount</Form.Label>
           <Form.Control 
             required 
-            type="number"
-            step=".01"
+            type="text"
             onChange={(e) => setState({...state, amount: parseFloat(e.target.value) })}/>
           <Form.Control.Feedback type="invalid">
             Please provide a valid amount.
