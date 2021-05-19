@@ -102,33 +102,3 @@ export const AuthProvider = ({ children }: Props) => {
 }
 
 export const useAuth = () => useContext(AuthContext)
-
-// interface Props {
-//   children: ReactNode
-// }
-
-// type Context = {
-//   loggedIn: boolean,
-//   setLoggedIn: Dispatch<SetStateAction<boolean>>
-// }
-
-// const initialContext: Context = {
-//   loggedIn: false,
-//   setLoggedIn: (): void => {}
-// }
-
-// const AuthContext = createContext<Context>(initialContext)  
-
-// export const useAuth = () => useContext(AuthContext)
-
-// export const AuthProvider = ({ children }: Props) => {
-//   const [loggedIn, setLoggedIn] = useState<boolean>(false)
-
-//   console.log(loggedIn)
-
-//   return (
-//     <AuthContext.Provider value={{loggedIn, setLoggedIn}}>
-//       {children}
-//     </AuthContext.Provider>
-//   )
-// }
