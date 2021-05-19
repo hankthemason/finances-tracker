@@ -42,8 +42,11 @@ export const AddCategory = ({ type, hidden }: AddCategoryProps) => {
         </Form.Control>
         <Form.Control.Feedback type="invalid">please enter a unique category name with no numbers or special characters</Form.Control.Feedback>
       </Form.Group>
-      <Button variant="primary" onClick={handleSubmit}>
-        Submit
+      <Button 
+        variant="primary"
+        size="sm"
+        onClick={handleSubmit}>
+        Add
       </Button>
     </Form>
   )
