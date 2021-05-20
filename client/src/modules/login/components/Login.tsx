@@ -17,7 +17,7 @@ export const Login = (props: any) => {
       console.log(result)
       if (result.message === 'login error') {
         setError({
-          type: 'server error',
+          type: 'server',
           message: 'either you don\'t have an account or the email and password do not match'
         })
       } else {

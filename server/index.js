@@ -128,7 +128,7 @@ app.post('/api/addCategory', async (req, res) => {
 app.post('/api/addItem', async (req, res, next) => {
   let type = req.query.type
   let { user_id, amount, date, notes, category } = req.body
-  let message
+
   try {
     const message = await models[type].addItem(user_id, category, amount, notes, date)
     return res.json(message)

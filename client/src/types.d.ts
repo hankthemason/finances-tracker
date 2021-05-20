@@ -129,3 +129,17 @@ interface UserFinancesInfo {
   total: string,
   category_totals: CategoryTotalsObj[]
 }
+
+interface AddItemFormErrors {
+  amount?: string,
+  category?: string,
+  date?: string
+}
+
+interface AddItemProps {
+  amount: string,
+  category: string,
+  notes?: string,
+  date: string,
+  user_id: number 
+}
