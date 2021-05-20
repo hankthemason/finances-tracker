@@ -5,79 +5,10 @@ import { AddCategory } from './AddCategory'
 import Button from 'react-bootstrap/Button'
 import { BsX } from 'react-icons/bs'
 
-export const AddItemForm = ({ user, categories, type }: AddItemFormProps) => {
-  
-  const { updateUserExpensesInfo, updateUserIncomeInfo } = GetUserInfo()
+export const AddItemForm = ({ user, categories, type, formState, setFormState, errors, setErrors, handleSubmit, validated }: AddItemFormProps) => { 
 
   const [addCategoryIsHidden, setAddCategoryIsHidden] = useState(true)
-  
-  const [category, setCategory] = useState<string>('')
-  const [amount, setAmount] = useState<string>('')
-  const [notes, setNotes] = useState<string>('')
-  const [date, setDate] = useState<string>('')
   const user_id = user.info.user_id 
-  
-  const [validated, setValidated] = useState(false)
-  const [errors, setErrors] = useState<AddItemFormErrors>() 
-  
-  const amountIsValid = () => {
-    var regex  = /(?=.*?\d)^\$?(([1-9]\d{0,2}(,\d{3})*)|\d+)?(\.\d{1,2})?$/
-    if (!regex.test(amount)) {
-      return false
-    }
-    return true
-  }
-  
-  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
-    if (category && amount && date && amountIsValid()) {
-      await submitItem({
-        category,
-        amount,
-        notes,
-        date,
-        user_id
-      })
-    } else {
-      let categoryErr = category ? undefined : 'you must select a category'
-      let amountErr = amount ? undefined : 'you must enter an amount'
-      if (!amountIsValid()) {
-        amountErr = 'you must enter a valid amount'
-      }
-      let dateErr = date ? undefined : 'you must select a date'
-      setErrors({
-        ...errors,
-        category: categoryErr,
-        amount: amountErr,
-        date: dateErr
-      })
-    }
-  }
-
-  const submitItem = async (addItemProps: AddItemProps) => {
-    await fetch(`/api/addItem?type=${type}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(addItemProps)
-    }).then(async (result) => {
-      if (result.status === 200) {
-        console.log('success!')
-        const res = type === 'expenses' ? updateUserExpensesInfo() : updateUserIncomeInfo()
-        return res
-      } else {
-        console.log(await result.json())
-        console.log('error!')
-      }
-    }).then(result => {
-      if (result !== undefined) {
-        window.location.reload()
-      }
-    })
-    setValidated(true)
-  }
   
   return (
     <div className='form-wrapper'>
@@ -94,7 +25,9 @@ export const AddItemForm = ({ user, categories, type }: AddItemFormProps) => {
             isInvalid={errors !== undefined && errors.category ? true : false}
             as='select'
             onChange={(e) => {
-              setCategory(e.target.value)
+              setFormState({
+                ...formState,
+                category: e.target.value})
               setErrors({
                 ...errors,
                 category: undefined 
@@ -130,7 +63,9 @@ export const AddItemForm = ({ user, categories, type }: AddItemFormProps) => {
             isInvalid={errors !== undefined && errors.amount ? true : false}
             type="text"
             onChange={(e) => {
-              setAmount(e.target.value)
+              setFormState({
+                ...formState,
+                amount: e.target.value})
               setErrors({
                 ...errors,
                 amount: undefined
@@ -146,7 +81,7 @@ export const AddItemForm = ({ user, categories, type }: AddItemFormProps) => {
             as="textarea" 
             rows={3} 
             placeholder="(optional)"
-            onChange={(e) => setNotes(e.target.value)}/>
+            onChange={(e) => setFormState({...formState, notes: e.target.value})}/>
         </Form.Group>
         <Form.Group controlId="transactionDate">
           <Form.Label>Date</Form.Label>
@@ -156,7 +91,9 @@ export const AddItemForm = ({ user, categories, type }: AddItemFormProps) => {
             type="date" 
             name='date_of_transaction'
             onChange={(e) => {
-              setDate(e.target.value)
+              setFormState({
+                ...formState,
+                date: e.target.value})
               setErrors({
                 ...errors,
                 date: undefined

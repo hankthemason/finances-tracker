@@ -5,6 +5,7 @@ import Dashboard from 'modules/dashboard/components'
 import { useAuth } from 'context/authContext'
 import { UserInfoProvider } from 'context/userInfoContext'
 import { AddItemForm } from 'modules/dashboard/components/AddItemForm'
+import { AddItem } from 'modules/dashboard/components/AddItem'
 import { Login } from 'modules/login/components/Login'
 
 export const AuthenticatedApp = () => {
@@ -42,10 +43,10 @@ export const AuthenticatedApp = () => {
               <DashboardHome />
             </Route>
             <Route path='/dashboard/addExpense'>
-              <AddItemForm user={user} type={'expenses'} categories={categories.expenseCategories} />
+              <AddItem user={user} type={'expenses'} categories={categories.expenseCategories} />
             </Route>
             <Route path='/dashboard/addIncome'>
-              <AddItemForm user={user} type={'income'} categories={categories.incomeCategories} />
+              <AddItem user={user} type={'income'} categories={categories.incomeCategories} />
             </Route>
             <Route path={['/login','/register']}>
               <Redirect to='/dashboard/home' />

@@ -77,9 +77,15 @@ interface AddCategoryProps {
 }
 
 interface AddItemFormProps {
-  user: UserContextObjecta,
+  user: UserContextObject,
   categories: Category[],
-  type: string
+  type: string,
+  formState: FormStateObj,
+  setFormState: Dispatch<SetStateAction<FormStateObj>>,
+  errors: AddItemFormErrors,
+  setErrors: Dispatch<SetStateAction<AddItemFormErrors>>,
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>,
+  validated: boolean
 }
 
 interface DashboardItem {
@@ -136,10 +142,14 @@ interface AddItemFormErrors {
   date?: string
 }
 
-interface AddItemProps {
+interface SubmitProps {
+  formState: FormStateObj,
+  user_id: number
+}
+
+interface FormStateObj {
   amount: string,
   category: string,
   notes?: string,
-  date: string,
-  user_id: number 
+  date: string
 }
