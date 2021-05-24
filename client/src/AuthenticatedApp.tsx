@@ -4,9 +4,11 @@ import { useState, useEffect } from 'react'
 import Dashboard from 'modules/dashboard/components'
 import { useAuth } from 'context/authContext'
 import { UserInfoProvider } from 'context/userInfoContext'
+import { DateProvider } from 'context/dateContext'
 import { AddItemForm } from 'modules/dashboard/components/AddItemForm'
 import { AddItem } from 'modules/dashboard/components/AddItem'
 import { Login } from 'modules/login/components/Login'
+import { Transactions } from 'modules/transactions/components'
 
 export const AuthenticatedApp = () => {
 
@@ -34,25 +36,30 @@ export const AuthenticatedApp = () => {
     <div>
       <Dashboard />
       <div className='wrapper'>
-        <UserInfoProvider>
-          <Switch>
-            <Route exact path='/'>
-              <Redirect to='/dashboard/home' />
-            </Route>
-            <Route path='/dashboard/home'>
-              <DashboardHome />
-            </Route>
-            <Route path='/dashboard/addExpense'>
-              <AddItem user={user} type={'expenses'} categories={categories.expenseCategories} />
-            </Route>
-            <Route path='/dashboard/addIncome'>
-              <AddItem user={user} type={'income'} categories={categories.incomeCategories} />
-            </Route>
-            <Route path={['/login','/register']}>
-              <Redirect to='/dashboard/home' />
-            </Route>
-          </Switch>
-        </UserInfoProvider>
+        <DateProvider>
+          <UserInfoProvider>
+            <Switch>
+              <Route exact path='/'>
+                <Redirect to='/dashboard/home' />
+              </Route>
+              <Route path='/dashboard/home'>
+                <DashboardHome />
+              </Route>
+              <Route path='/dashboard/addExpense'>
+                <AddItem user={user} type={'expenses'} categories={categories.expenseCategories} />
+              </Route>
+              <Route path='/dashboard/addIncome'>
+                <AddItem user={user} type={'income'} categories={categories.incomeCategories} />
+              </Route>
+              <Route path={['/login','/register']}>
+                <Redirect to='/dashboard/home' />
+              </Route>
+              <Route path={'/dashboard/transactions'}>
+                <Transactions />
+              </Route>
+            </Switch>
+          </UserInfoProvider>
+        </DateProvider>
       </div>
     </div>
   )

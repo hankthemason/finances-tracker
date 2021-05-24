@@ -153,3 +153,28 @@ interface FormStateObj {
   notes?: string,
   date: string
 }
+
+interface DateContext {
+  day: number | undefined,
+  month: string, 
+  year: string
+}
+
+interface Transaction {
+  expense_id: number,
+  category_name: string,
+  amount: string,
+  timestamp: string,
+  notes?: string
+}
+
+interface TransactionsTableProps {
+  transactions: Transaction[],
+  headers: string[]
+}
+
+interface DateObj {
+  day?: number,
+  month: string,
+  year: string
+}

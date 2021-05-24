@@ -65,7 +65,7 @@ export const AddItem = (props: AddItemHOCProps) => {
   const [validated, setValidated] = useState(false)
 
   const submitItem = async(props: SubmitProps) => {
-    console.log(props)
+    
     await fetch(`/api/addItem?type=${type}`, {
       method: 'POST',
       headers: {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, createContext, useContext } from 'react'
 import { useAuth } from 'context/authContext'
+import { useDate } from 'context/dateContext'
 
 const defaultUserIncomeInfo: UserFinancesInfo = {
 	total: '0',
@@ -32,10 +33,7 @@ export const UserInfoProvider = ({ children }: Props) => {
 
 	const { user } = useAuth()
 
-	const d = new Date()
-  const m = d.getMonth() + 1
-  const month = '0'.concat(m.toString())
-  const year = d.getFullYear().toString()
+	const { day, month, year } = useDate()
 
   const [userExpensesInfo, setUserExpensesInfo] = useState<UserFinancesInfo>(defaultUserExpensesInfo)
   const [userIncomeInfo, setUserIncomeInfo] = useState<UserFinancesInfo>(defaultUserIncomeInfo)

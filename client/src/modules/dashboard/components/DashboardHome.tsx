@@ -21,7 +21,9 @@ export const DashboardHome = () => {
       <DateAndTime />
       {userExpensesInfo && <Expenses total={userExpensesInfo.total}/>}
       {userIncomeInfo && <Income total={userIncomeInfo.total}/>}
+      <h3>Expenses: </h3>
       {userExpensesInfo && userExpensesInfo.total && <Donut labelName='category_name' dataName='total' data={userExpensesInfo.category_totals}/>}
+      <h3>Income: </h3>
       {userIncomeInfo && userIncomeInfo.total && <Donut labelName='category_name' dataName='total' data={userIncomeInfo.category_totals}/>}
     </div>
   )

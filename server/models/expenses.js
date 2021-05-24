@@ -119,6 +119,23 @@ class Expenses {
     )
     return result.rows[0]
   }
+
+  getTransactions = async(user_id, month, year) => {
+    try {
+      const result = await this.pool.query (
+        `SELECT expense_id, category_name, amount, timestamp, notes
+        FROM expenses
+        WHERE user_id = $1
+        AND EXTRACT(MONTH FROM timestamp) = $2
+        AND EXTRACT(YEAR FROM timestamp) = $3
+        ORDER BY timestamp DESC`,
+        [user_id, month, year]
+      )
+      return result.rows
+    } catch(err) {
+      console.error(err)
+    }
+  }
 }
 
 module.exports = Expenses

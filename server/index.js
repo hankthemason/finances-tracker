@@ -56,6 +56,12 @@ app.get('/api/expenses', async (req, res) => {
   res.json(expenses)
 })
 
+app.get('/api/getTransactions', async (req, res) => {
+  const { user_id, month, year, type } = req.query
+  const transactions = await models[type].getTransactions(user_id, month, year)
+  res.json(transactions)
+})
+
 app.get('/api/getUserExpensesInfo', async(req, res) => {
   const user_id = req.query.user_id
   const month = req.query.month
