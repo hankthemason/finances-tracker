@@ -33,7 +33,7 @@ function App() {
         {flash}
       </div>}
         <Switch>
-          <Route exact path={'/'}>
+          <Route exact path='/'>
             <Redirect to='/login' />
           </Route>
           <Route path='/register'>
