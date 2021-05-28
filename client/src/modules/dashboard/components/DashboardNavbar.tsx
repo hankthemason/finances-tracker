@@ -4,8 +4,11 @@ import Nav from 'react-bootstrap/Nav'
 export const DashboardNavbar = ({items}: DashboardNavbarProps) => {
 
   return (
-    <Navbar bg="primary" variant="dark">
+    <div className='navbar-wrapper'>
+    <Navbar bg="primary" variant="dark" expand="lg">
       <Navbar.Brand href='/dashboard/home'>Dashboard</Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
       <Nav className='container-fluid'>
         {items.map(e => (
           <Nav.Link
@@ -16,10 +19,9 @@ export const DashboardNavbar = ({items}: DashboardNavbarProps) => {
             {e.value}
           </Nav.Link>
         ))}
-        <Nav.Link>
-        </Nav.Link>
       </Nav>
-    
+    </Navbar.Collapse>
     </Navbar>
+  </div>
   )
 }

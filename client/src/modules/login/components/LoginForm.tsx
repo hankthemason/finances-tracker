@@ -30,11 +30,13 @@ export const LoginForm = ({onSubmit}: LoginFormProps) => {
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control
+              className='form-input'
               isInvalid={error !== undefined ? true : false} 
               type="email" 
               placeholder="Enter email" 
               onChange={e => setEmail(e.target.value)}
-              value={email}/>
+              value={email}
+              />
           <Form.Control.Feedback type="invalid">
             {error !== undefined ? error.message : null}
           </Form.Control.Feedback>
@@ -42,6 +44,7 @@ export const LoginForm = ({onSubmit}: LoginFormProps) => {
           <Form.Group controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
             <Form.Control 
+              className='form-input'
               type="password" 
               placeholder="Password" 
               onChange={e => setPassword(e.target.value)}

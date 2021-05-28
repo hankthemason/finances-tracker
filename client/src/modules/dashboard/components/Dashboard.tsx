@@ -29,6 +29,10 @@ const Dashboard = () => {
       value: 'Add Income',
       path: '/dashboard/addIncome'
     },
+    {
+      value: 'View Transactions',
+      path: '/dashboard/transactions'
+    },
     { 
       value: 'Logout',
       path: '/login',

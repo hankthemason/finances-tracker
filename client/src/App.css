@@ -44,3 +44,25 @@
 /* .form-control {
   width: 20% !important;
 } */
+
+#date-selector {
+  width: 100%
+}
+
+select.form-control, input.form-control, textarea.form-control {
+  width: 30%;
+}
+
+@media screen and (max-width: 850px) {
+  select.form-control, input.form-control, textarea.form-control {
+    width: 80%;
+  }
+  a.ml-auto.nav-link {
+    margin-left: 0!important;
+  }
+  .chart-wrapper {
+    width: 100%!important;
+  }
+}
+
+

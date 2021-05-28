@@ -65,6 +65,7 @@ export const Transactions = () => {
       <Form.Group controlId="date-select-form" style={styles.DateSelect}>
         <Form.Label>Month</Form.Label>
         <Form.Control
+          id='date-selector'
           as="select"
           defaultValue={parseInt(date.month)} 
           size="sm"
@@ -83,6 +84,7 @@ export const Transactions = () => {
         <Form.Group style={styles.DateSelect}>
         <Form.Label>Year</Form.Label>
         <Form.Control
+          id='date-selector'
           as="select"
           defaultValue={years.length - 1}
           size="sm"

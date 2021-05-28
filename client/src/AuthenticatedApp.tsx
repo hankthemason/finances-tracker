@@ -54,7 +54,7 @@ export const AuthenticatedApp = () => {
               <Route path={['/login','/register']}>
                 <Redirect to='/dashboard/home' />
               </Route>
-              <Route path={'/dashboard/transactions'}>
+              <Route path='/dashboard/transactions'>
                 <Transactions />
               </Route>
             </Switch>
