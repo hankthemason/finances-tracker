@@ -58,6 +58,11 @@ select.form-control, input.form-control, textarea.form-control {
 }
 
 @media screen and (max-width: 850px) {
+
+  .chart-container {
+    width: 100%!important;
+  }
+
   select.form-control, input.form-control, textarea.form-control {
     width: 80%;
   }
@@ -67,6 +72,21 @@ select.form-control, input.form-control, textarea.form-control {
   .chart-wrapper {
     width: 100%!important;
   }
+  
+}
+
+.chart-wrapper {
+  padding: 10px;
+}
+
+.text-wrapper {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.chart-container {
+  padding-top: 10px;
+  padding-bottom: 10px; 
 }
 
 

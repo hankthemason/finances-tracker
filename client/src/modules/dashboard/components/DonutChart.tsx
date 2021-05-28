@@ -27,6 +27,11 @@ export const Donut = ({labelName, dataName, data}: DonutProps<CategoryTotalsObj>
     maintainAspectRatio: true,
     responsive: true,
     width: '30%',
+    layout: {
+      padding: {
+        bottom: 5
+      }
+    },
     tooltips: {
       enabled: true,
       callbacks: {

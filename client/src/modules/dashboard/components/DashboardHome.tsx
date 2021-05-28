@@ -18,10 +18,12 @@ export const DashboardHome = () => {
   return (
     <div>
       <p>{`Hello, ${user.info.username}!`}</p>
+      <div className='textWrapper'>
       <DateAndTime />
       {userExpensesInfo && <Expenses total={userExpensesInfo.total}/>}
       {userIncomeInfo && <Income total={userIncomeInfo.total}/>}
-      <div className='chart-containter' style={{display: 'inline-block', width: '100%'}}>
+      </div>
+      <div className='chart-container' style={{display: 'inline-block', width: '80%'}}>
         <div style={{display: 'inline-block', width: '50%'}}>
         <h3>Expenses: </h3>
         {userExpensesInfo && userExpensesInfo.total && <Donut labelName='category_name' dataName='total' data={userExpensesInfo.category_totals}/>}
