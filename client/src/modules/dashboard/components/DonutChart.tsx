@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState, useCallback } from 'react'
 import { Doughnut } from "react-chartjs-2";
 import generateColors from 'utils/colorGen';
 import parse from 'html-react-parser';
@@ -8,7 +8,19 @@ export const Donut = ({labelName, dataName, data}: DonutProps<CategoryTotalsObj>
   let labels = data.map(e => e[labelName])
   let dataSet = data.map(e => Number(e[dataName].replace(/[^0-9.-]+/g,"")))
   const chartEl = useRef<Doughnut>(null)
+  const [ref, setRef] = useState<Doughnut>()
   const colors = generateColors(data.length)
+  const [legend, setLegend] = useState<any>()
+
+  const onRefChange = useCallback(node => {
+
+    // ref value changed to node
+    setRef(node); // e.g. change ref state to trigger re-render
+    if (node !== null) {
+      console.log('change')
+      setLegend(node.chartInstance.generateLegend())
+    }
+  }, []);
   
   const chart = {
     labels: labels,
@@ -47,7 +59,10 @@ export const Donut = ({labelName, dataName, data}: DonutProps<CategoryTotalsObj>
       display: false
     },
     legendCallback: (chartEl: any) => {
-      let html = '<ul className="chart-legend">';
+      let labels
+      return 'yo'
+      
+      /*let html = '<ul className="chart-legend">';
       let labels = chartEl.data.labels
       let clrs = chartEl.data.datasets[0].backgroundColor
       let borderWidth = chartEl.data.datasets[0].borderWidth
@@ -59,14 +74,14 @@ export const Donut = ({labelName, dataName, data}: DonutProps<CategoryTotalsObj>
           labels[i] + '</div>' +
           '</li>';
       });
-      return html + '</ul>';
+      return html + '</ul>';*/
     },
   }
   
   return (
     <div className='chart-wrapper' style={{width: '400px'}}>
-      <Doughnut data={chart} options={options} ref={chartEl}/>
-      {chartEl.current && parse(chartEl.current.chartInstance.generateLegend())}
-    </div>
+      <Doughnut data={chart} options={options} ref={onRefChange}/>
+      {legend}
+    </div> 
   )
 }
