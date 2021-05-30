@@ -17,7 +17,6 @@ export const Donut = ({labelName, dataName, data}: DonutProps<CategoryTotalsObj>
     // ref value changed to node
     setRef(node); // e.g. change ref state to trigger re-render
     if (node !== null) {
-      console.log('change')
       setLegend(node.chartInstance.generateLegend())
     }
   }, []);
@@ -59,22 +58,13 @@ export const Donut = ({labelName, dataName, data}: DonutProps<CategoryTotalsObj>
       display: false
     },
     legendCallback: (chartEl: any) => {
-      let labels
-      return 'yo'
-      
-      /*let html = '<ul className="chart-legend">';
       let labels = chartEl.data.labels
-      let clrs = chartEl.data.datasets[0].backgroundColor
-      let borderWidth = chartEl.data.datasets[0].borderWidth
-      let borderColor = chartEl.data.datasets[0].borderColor
-      chartEl.data.datasets[0].data.forEach((ds: any, i: any) => {
-        html += '<li>' +
-          '<div style="vertical-align: middle; display: inline-block; width: 20px; height: 14px; background-color:' + clrs[i] + '; border:' + borderWidth + 'px solid ' + borderColor + '" onclick="onLegendClicked(event, \'' + i + '\')">&nbsp;</div>' +
-          '<div style="margin-left: 1px; display: inline-block" class="legend-label" id="legend-label-' + i + '" onclick="onLegendClicked(event, \'' + i + '\')">' +
-          labels[i] + '</div>' +
-          '</li>';
-      });
-      return html + '</ul>';*/
+      console.log(chartEl.data)
+      return (
+        labels.map((l: any, i: any) => (
+          <div>{labels[i]}</div>
+        ))
+      )
     },
   }
   

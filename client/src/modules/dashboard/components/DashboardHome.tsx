@@ -26,11 +26,11 @@ export const DashboardHome = () => {
       <div className='chart-container' style={{display: 'inline-block', width: '80%'}}>
         <div style={{display: 'inline-block', width: '50%'}}>
         <h3>Expenses: </h3>
-        {userExpensesInfo && userExpensesInfo.total && <Donut labelName='category_name' dataName='total' data={userExpensesInfo.category_totals}/>}
+        {userExpensesInfo && userExpensesInfo.total && userExpensesInfo.category_totals.length && <Donut labelName='category_name' dataName='total' data={userExpensesInfo.category_totals}/>}
         </div>
         <div style={{display: 'inline-block', width: '50%', verticalAlign: 'top'}}>
         <h3>Income: </h3>
-        {userIncomeInfo && userIncomeInfo.total && <Donut labelName='category_name' dataName='total' data={userIncomeInfo.category_totals}/>}
+        {userIncomeInfo && userIncomeInfo.total && userIncomeInfo.category_totals.length && <Donut labelName='category_name' dataName='total' data={userIncomeInfo.category_totals}/>}
         </div>
       </div>
     </div>
