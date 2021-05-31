@@ -11,6 +11,7 @@ export const Donut = ({labelName, dataName, data}: DonutProps<CategoryTotalsObj>
   const [ref, setRef] = useState<Doughnut>()
   const colors = generateColors(data.length)
   const [legend, setLegend] = useState<any>()
+  const [, forceUpdate] = useState(null);
 
   const onRefChange = useCallback(node => {
 
@@ -20,6 +21,16 @@ export const Donut = ({labelName, dataName, data}: DonutProps<CategoryTotalsObj>
       setLegend(node.chartInstance.generateLegend())
     }
   }, []);
+
+  const handleLegendClick = (event: React.MouseEvent<HTMLLIElement, MouseEvent>, datasetIndex: number, chartEl: any) => {
+    
+    let e = event.target as Element
+    chartEl.getDatasetMeta(0).data[datasetIndex].hidden = 
+    chartEl.getDatasetMeta(0).data[datasetIndex].hidden ? false : true
+    e.classList.toggle("crossed-line")
+
+    chartEl.update()
+  };
   
   const chart = {
     labels: labels,
@@ -59,15 +70,21 @@ export const Donut = ({labelName, dataName, data}: DonutProps<CategoryTotalsObj>
     },
     legendCallback: (chartEl: any) => {
       let labels = chartEl.data.labels
-      console.log(chartEl.data)
+      let clrs = chartEl.data.datasets[0].backgroundColor
+      let borderWidth = chartEl.data.datasets[0].borderWidth
       return (
-        labels.map((l: any, i: any) => (
-          <div>{labels[i]}</div>
-        ))
+        <ul className="chart-legend">
+          {labels.map((l: any, i: any) => (
+            <li onClick={(event) => handleLegendClick(event, i, chartEl)}>
+              <div className="legend-block" style={{backgroundColor: colors[i], border: `${borderWidth}px solid`}} />
+              <div className="legend-label">{labels[i]}</div>
+            </li>
+          ))}
+        </ul>
       )
     },
   }
-  
+
   return (
     <div className='chart-wrapper' style={{width: '400px'}}>
       <Doughnut data={chart} options={options} ref={onRefChange}/>

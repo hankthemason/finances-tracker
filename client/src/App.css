@@ -89,4 +89,20 @@ select.form-control, input.form-control, textarea.form-control {
   padding-bottom: 10px; 
 }
 
+.legend-block {
+  vertical-align: middle;
+  display: inline-block;
+  width: 20px; 
+  height: 14px;
+}
+
+.legend-label {
+  margin-left: 10px; 
+  display: inline-block;
+}
+
+.crossed-line {
+  text-decoration: line-through;
+}
+
 
