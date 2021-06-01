@@ -123,7 +123,7 @@ class Expenses {
   getTransactions = async(user_id, month, year) => {
     try {
       const result = await this.pool.query (
-        `SELECT expense_id, category_name, amount, timestamp, notes
+        `SELECT expense_id, category_name, amount, to_char(timestamp, 'MM-DD-YYYY') AS date, timestamp, notes
         FROM expenses
         WHERE user_id = $1
         AND EXTRACT(MONTH FROM timestamp) = $2

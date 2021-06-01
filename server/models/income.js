@@ -87,6 +87,23 @@ class Income {
       console.error(err)
     }
   }
+  
+  getTransactions = async(user_id, month, year) => {
+    try {
+      const result = await this.pool.query (
+        `SELECT income_id, category_name, amount, to_char(timestamp, 'MM-DD-YYYY') AS date, timestamp, notes
+        FROM income
+        WHERE user_id = $1
+        AND EXTRACT(MONTH FROM timestamp) = $2
+        AND EXTRACT(YEAR FROM timestamp) = $3
+        ORDER BY timestamp DESC`,
+        [user_id, month, year]
+      )
+      return result.rows
+    } catch(err) {
+      console.error(err)
+    }
+  }
 
 }
 
