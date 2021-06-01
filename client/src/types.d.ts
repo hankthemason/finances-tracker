@@ -164,6 +164,7 @@ interface Transaction {
   expense_id: number,
   category_name: string,
   amount: string,
+  date: string,
   timestamp: string,
   notes?: string
 }

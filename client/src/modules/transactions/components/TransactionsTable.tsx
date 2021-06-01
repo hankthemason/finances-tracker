@@ -23,7 +23,7 @@ export const TransactionsTable = (props: TransactionsTableProps) => {
               {e.notes}
             </td>
             <td>
-              {e.timestamp}
+              {e.date}
             </td>
           </tr>
         ))}
