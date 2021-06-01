@@ -3,11 +3,12 @@ import { Doughnut } from "react-chartjs-2";
 import generateColors from 'utils/colorGen';
 import parse from 'html-react-parser';
 
+
+
 export const Donut = ({labelName, dataName, data}: DonutProps<CategoryTotalsObj>) => {
 
   let labels = data.map(e => e[labelName])
   let dataSet = data.map(e => Number(e[dataName].replace(/[^0-9.-]+/g,"")))
-  const chartEl = useRef<Doughnut>(null)
   const [ref, setRef] = useState<Doughnut>()
   const colors = generateColors(data.length)
   const [legend, setLegend] = useState<any>()
@@ -70,14 +71,14 @@ export const Donut = ({labelName, dataName, data}: DonutProps<CategoryTotalsObj>
     },
     legendCallback: (chartEl: any) => {
       let labels = chartEl.data.labels
-      let clrs = chartEl.data.datasets[0].backgroundColor
-      let borderWidth = chartEl.data.datasets[0].borderWidth
+      let clrs = chartEl.data.datasets && chartEl.data.datasets[0].backgroundColor
+      let borderWidth = chartEl.data.datasets && chartEl.data.datasets[0].borderWidth
       return (
         <ul className="chart-legend">
-          {labels.map((l: any, i: any) => (
+          {labels && labels.map((l: any, i: any) => (
             <li onClick={(event) => handleLegendClick(event, i, chartEl)}>
               <div className="legend-block" style={{backgroundColor: colors[i], border: `${borderWidth}px solid`}} />
-              <div className="legend-label">{labels[i]}</div>
+              {labels && <div className="legend-label">{labels[i]}</div>}
             </li>
           ))}
         </ul>
