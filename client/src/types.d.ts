@@ -161,17 +161,19 @@ interface DateContext {
 }
 
 interface Transaction {
-  expense_id: number,
+  expenses_id: number,
   category_name: string,
   amount: string,
   date: string,
   timestamp: string,
-  notes?: string
+  notes: string,
+  [transaction_id: string]: number
 }
 
 interface TransactionsTableProps {
   transactions: Transaction[],
-  headers: string[]
+  headers: string[],
+  type: string
 }
 
 interface DateObj {
@@ -180,3 +182,22 @@ interface DateObj {
   year: string
 }
 
+interface TransactionsTable {
+  [category: string]: {
+    [width: string]: string
+  },
+  [amount: string]: {
+    [width: string]: string
+  },
+  [notes: string]: {
+    [width: string]: string
+  },
+  [date: string]: {
+    [width: string]: string
+  }
+}
+
+interface LocationState {
+  pathname: string,
+  state: Transaction
+}
