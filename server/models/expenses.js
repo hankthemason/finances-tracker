@@ -9,7 +9,7 @@ class Expenses {
     try {
       await this.pool.query(
         `CREATE TABLE IF NOT EXISTS expenses (
-            expense_id serial PRIMARY KEY,
+            expenses_id serial PRIMARY KEY,
             user_id INT NOT NULL,
             category_name VARCHAR (50) NOT NULL,
             amount NUMERIC(10, 2) NOT NULL,
@@ -115,7 +115,7 @@ class Expenses {
     const result = await this.pool.query(
       `INSERT INTO expenses (user_id, category_name, amount, notes, timestamp)
       VALUES ($1, $2, $3, $4, $5)
-      RETURNING expense_id`, [user_id, category, amount, notes, date]
+      RETURNING expenses_id`, [user_id, category, amount, notes, date]
     )
     return result.rows[0]
   }
@@ -123,7 +123,7 @@ class Expenses {
   getTransactions = async(user_id, month, year) => {
     try {
       const result = await this.pool.query (
-        `SELECT expense_id, category_name, amount, to_char(timestamp, 'MM-DD-YYYY') AS date, timestamp, notes
+        `SELECT expenses_id, category_name, amount, to_char(timestamp, 'MM-DD-YYYY') AS date, timestamp, notes
         FROM expenses
         WHERE user_id = $1
         AND EXTRACT(MONTH FROM timestamp) = $2
