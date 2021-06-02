@@ -4,6 +4,7 @@ import { useAuth } from 'context/authContext'
 import { TransactionsTable } from 'modules/transactions/components'
 import { Form } from 'react-bootstrap'
 import { styles } from 'modules/transactions/styles'
+import capitalizeFirstLetter from 'utils/capitalizeFirstLetter'
 
 export const Transactions = () => {
   let { user } = useAuth()
@@ -64,7 +65,7 @@ export const Transactions = () => {
     <div>
     <div className="date-wrapper">
     <Form>
-      <Form.Row>
+      <Form.Row className='transactions-selectors'>
       <Form.Group controlId="transaction-type-select-form" style={styles.DateSelect}>
         <Form.Label>Type</Form.Label>
         <Form.Control
@@ -76,7 +77,7 @@ export const Transactions = () => {
             setTransactionType(transactionTypes[i])
           }}>
           {transactionTypes.map((e, idx) => (
-            <option value={idx}>{e}</option>
+            <option value={idx}>{capitalizeFirstLetter(e)}</option>
           ))}
         </Form.Control>
       </Form.Group>
@@ -126,6 +127,7 @@ export const Transactions = () => {
       <TransactionsTable 
         transactions={transactions} 
         headers={headers}
+        type={transactionType}
       /> : <div>loading...</div>}
     </div>
   )
