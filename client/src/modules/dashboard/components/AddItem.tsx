@@ -43,12 +43,13 @@ export const AddItem = (props: AddItemHOCProps) => {
   
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    
+    console.log(amountIsValid())
     if (formState.category && formState.amount && formState.date && amountIsValid() && user_id) {
       await submitItem({formState, user_id})
     } else {
       let categoryErr = formState.category ? undefined : 'you must select a category'
       let amountErr = formState.amount ? undefined : 'you must enter an amount'
+      
       if (!amountIsValid()) {
         amountErr = 'you must enter a valid amount'
       }
