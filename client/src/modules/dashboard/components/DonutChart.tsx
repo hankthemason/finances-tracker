@@ -1,9 +1,6 @@
 import { useRef, useState, useCallback } from 'react'
 import { Doughnut } from "react-chartjs-2";
 import generateColors from 'utils/colorGen';
-import parse from 'html-react-parser';
-
-
 
 export const Donut = ({labelName, dataName, data}: DonutProps<CategoryTotalsObj>) => {
 
