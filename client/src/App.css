@@ -72,7 +72,14 @@ select.form-control, input.form-control, textarea.form-control {
   .chart-wrapper {
     width: 100%!important;
   }
-  
+  /* .transactions-table.table{
+    width: unset!important;
+  } */
+
+  /* #table-header {
+    width: 25%!important;
+  }
+   */
 }
 
 .chart-wrapper {
@@ -105,4 +112,14 @@ select.form-control, input.form-control, textarea.form-control {
   text-decoration: line-through;
 }
 
+/* .transactions-table.table{
+  width: 80%;
+} */
 
+.notes-header h4 {
+  display: inline-block;
+}
+
+.notes-header span {
+  font-size: 1.5rem;
+}
