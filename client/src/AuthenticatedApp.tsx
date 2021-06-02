@@ -9,6 +9,7 @@ import { AddItemForm } from 'modules/dashboard/components/AddItemForm'
 import { AddItem } from 'modules/dashboard/components/AddItem'
 import { Login } from 'modules/login/components/Login'
 import { Transactions } from 'modules/transactions/components'
+import { Notes } from 'modules/transactions/components'
 
 export const AuthenticatedApp = () => {
 
@@ -56,6 +57,9 @@ export const AuthenticatedApp = () => {
               </Route>
               <Route path='/dashboard/transactions'>
                 <Transactions />
+              </Route>
+              <Route path='/dashboard/notes'>
+                <Notes />
               </Route>
             </Switch>
           </UserInfoProvider>
