@@ -22,7 +22,7 @@ export const LoginForm = ({onSubmit}: LoginFormProps) => {
 
   return(
     <div className="login-wrapper">
-      <h1>Please Log In</h1>
+      <h4 style={{marginTop: '3rem'}}>Please Log In</h4>
       <div className='form-wrapper'>
         <Form 
           onSubmit={handleSubmit}

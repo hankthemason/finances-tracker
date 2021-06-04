@@ -27,7 +27,7 @@ function App() {
   return (
   !user.token ?
     <div className="wrapper">
-      <h1>Income/Expenses Tracker</h1>
+      <h1>dollarsdollarsdollars.club</h1>
       {flash && 
       <div>
         {flash}
