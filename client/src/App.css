@@ -185,7 +185,6 @@ select.form-control, input.form-control, textarea.form-control {
   text-align: center;
   font-family: unset;
   font-size: 4rem;
-  max-width: 320px;
 }
 
 .login-register-link {
