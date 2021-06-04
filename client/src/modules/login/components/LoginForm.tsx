@@ -22,7 +22,7 @@ export const LoginForm = ({onSubmit}: LoginFormProps) => {
 
   return(
     <div className="login-wrapper">
-      <h4 style={{marginTop: '3rem'}}>Please Log In</h4>
+      <h4 className='login-header'>Please Log In</h4>
       <div className='form-wrapper'>
         <Form 
           onSubmit={handleSubmit}
@@ -30,6 +30,7 @@ export const LoginForm = ({onSubmit}: LoginFormProps) => {
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control
+              id='login-form'
               className='form-input'
               isInvalid={error !== undefined ? true : false} 
               type="email" 
@@ -44,6 +45,7 @@ export const LoginForm = ({onSubmit}: LoginFormProps) => {
           <Form.Group controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
             <Form.Control 
+              id='login-form'
               className='form-input'
               type="password" 
               placeholder="Password" 
@@ -53,7 +55,7 @@ export const LoginForm = ({onSubmit}: LoginFormProps) => {
           <Button variant="primary" type="submit">
             Submit
           </Button>
-          <div>
+          <div className='login-register-link'>
             <Link to='/register'>new user? click here to register</Link>
           </div>
         </Form>

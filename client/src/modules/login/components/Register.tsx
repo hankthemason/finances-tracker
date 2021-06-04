@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from 'context/authContext'
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button'
 
@@ -70,7 +70,7 @@ export const Register = ({ setFlash }: RegisterProps) => {
 
   return(
     <div className='register-wrapper'>
-      <h1>Please Register</h1>
+      <h4 className='login-header'>Please Register</h4>
       {errors && errors.form && 
         <div className="error">
           {errors.form}
@@ -79,6 +79,7 @@ export const Register = ({ setFlash }: RegisterProps) => {
         <Form.Group controlId="formBasicUsername">
           <Form.Label>Username</Form.Label>
           <Form.Control
+            id='login-form'
             isInvalid={errors !== undefined && errors.username ? true : false} 
             type="username" 
             placeholder="enter username" 
@@ -96,6 +97,7 @@ export const Register = ({ setFlash }: RegisterProps) => {
           <Form.Label>Email</Form.Label>
           <Form.Control 
             isInvalid={errors !== undefined && errors.email ? true : false}
+            id='login-form'
             placeholder="enter email" 
             onChange={e => {
               setErrors(undefined)
@@ -110,6 +112,7 @@ export const Register = ({ setFlash }: RegisterProps) => {
         <Form.Group controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control
+            id='login-form'
             isInvalid={errors !== undefined && errors.password ? true : false} 
             type="password" 
             placeholder="enter password" 
@@ -126,6 +129,7 @@ export const Register = ({ setFlash }: RegisterProps) => {
         <Form.Group controlId="formBasicPassword">
           <Form.Label>Confirm Password</Form.Label>
           <Form.Control
+            id='login-form'
             isInvalid={errors !== undefined && errors.password2 ? true : false}
             type="password"
             placeholder="confirm password"
@@ -139,6 +143,9 @@ export const Register = ({ setFlash }: RegisterProps) => {
         </Form.Group>
         <Button variant="primary" type="submit">Submit</Button>
       </Form>
+      <div className='login-register-link'>
+        <Link to='/login'>back to login</Link>
+      </div>
     </div>
   )
 }

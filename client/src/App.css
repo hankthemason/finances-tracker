@@ -2,6 +2,12 @@
   text-align: center;
 }
 
+html, body, #root, .auth-body { height:100%; }
+
+.auth-body {
+  background:#2e8ee2 !important;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -45,6 +51,10 @@
   padding: 20px;
 }
 
+#login-form {
+  width: 100%;
+}
+
 /* .form-control {
   width: 20% !important;
 } */
@@ -63,6 +73,27 @@ select.form-control, input.form-control, textarea.form-control {
     width: 100%!important;
   }
 
+  .site-header {
+    font-size: 2rem;
+    font-size: 7vw!important;
+    text-align: center!important;
+    margin: auto;
+  }
+
+  .login-header {
+    margin-top: 1rem;
+    font-size: 1.25rem;
+  }
+
+  .auth-wrapper {
+    margin-top: .5rem;
+  }
+
+  .auth-inner {
+    width: 80%!important;
+    padding: 10px 25px 15px 25px!important;
+  }
+
   select.form-control, input.form-control, textarea.form-control {
     width: 80%;
   }
@@ -71,6 +102,10 @@ select.form-control, input.form-control, textarea.form-control {
   }
   .chart-wrapper {
     width: 100%!important;
+  }
+
+  .login-register-link {
+    font-size: .8rem;
   }
   /* .transactions-table.table{
     width: unset!important;
@@ -122,4 +157,37 @@ select.form-control, input.form-control, textarea.form-control {
 
 .notes-header span {
   font-size: 1.5rem;
+}
+
+.auth-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: left;
+}
+
+.auth-inner {
+  width: 450px;
+  margin: auto;
+  background: #ffffff;
+  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+  padding: 40px 55px 45px 55px;
+  border-radius: 15px;
+  transition: all .3s;
+}
+
+.login-header {
+  margin-top: 1rem
+}
+
+.site-header {
+  color: lightcyan;
+  text-align: center;
+  font-family: unset;
+  font-size: 4rem;
+  max-width: 320px;
+}
+
+.login-register-link {
+  padding-top: 1rem;
 }

@@ -26,25 +26,29 @@ function App() {
 
   return (
   !user.token ?
-    <div className="wrapper">
-      <h1>dollarsdollarsdollars.club</h1>
+    <div className="wrapper auth-body">
+      <h1 className='site-header'>dollarsdollarsdollars.club</h1>
       {flash && 
       <div>
         {flash}
       </div>}
         <Switch>
-          <Route exact path='/'>
-            <Redirect to='/login' />
-          </Route>
-          <Route path='/register'>
-            <Register setFlash={setFlash}/>
-          </Route>
-          <Route path='/login'>
-            <Login loginUser={loginUser} />
-          </Route>
-          <Route path='/dashboard'>
-            <Redirect to='/login'/>
-          </Route>
+          <div className="auth-wrapper">
+            <div className="auth-inner">
+              <Route exact path='/'>
+                <Redirect to='/login' />
+              </Route>
+              <Route path='/register'>
+                <Register setFlash={setFlash}/>
+              </Route>
+              <Route path='/login'>
+                <Login loginUser={loginUser} />
+              </Route>
+              <Route path='/dashboard'>
+                <Redirect to='/login'/>
+              </Route>
+            </div>
+          </div>
         </Switch>
     </div>
   : 
