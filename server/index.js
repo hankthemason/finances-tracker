@@ -58,8 +58,13 @@ app.get('/api/expenses', async (req, res) => {
 
 app.get('/api/getTransactions', async (req, res) => {
   const { user_id, month, year, type } = req.query
-  const transactions = await models[type].getTransactions(user_id, month, year)
-  res.json(transactions)
+
+  try {
+    const transactions = await models[type].getTransactions(user_id, month, year)
+    res.json(transactions)
+  } catch(err) {
+    res.status(401).send(err.toString())
+  }
 })
 
 app.get('/api/getUserExpensesInfo', async(req, res) => {

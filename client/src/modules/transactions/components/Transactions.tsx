@@ -48,14 +48,14 @@ export const Transactions = () => {
   useEffect(() => {
 
     const getTransactions = async() => {
-      console.log(selectedDate)
-      const res = await fetch(`/api/getTransactions?user_id=${user_id}&type=${transactionType}&month=${selectedDate.month}&year=${selectedDate.year}`)
-        .then(result => {
-          if (result.ok) {
-            return result.json()
-          }
-        }).catch(err => console.log(err))
-      setTransactions(res)
+      try {
+        let res = await fetch(`/api/getTransactions?user_id=${user_id}&type=${transactionType}&month=${selectedDate.month}&year=${selectedDate.year}`)
+        let data = await res.json()
+        setTransactions(data)
+      }
+      catch (err) {
+        console.log(err)
+      }
     }
 
     getTransactions()

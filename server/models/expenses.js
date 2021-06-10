@@ -133,7 +133,7 @@ class Expenses {
       )
       return result.rows
     } catch(err) {
-      console.error(err)
+      throw err 
     }
   }
 }
