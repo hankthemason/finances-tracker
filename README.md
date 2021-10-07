@@ -1,4 +1,5 @@
 # finances-tracker
+![finances-tracker](https://user-images.githubusercontent.com/42900752/136457105-4b81533d-faf7-4d7f-a16e-cd9e1d68f6bc.png)
 
 Full-stack budgeting app that allows a user to log their transactions (income and expenses) and see them represented visually in interactive charts.  You can try it out at [dollarsdollarsdollars.club](https://dollarsdollarsdollars.club). 
 
@@ -15,7 +16,20 @@ Full-stack budgeting app that allows a user to log their transactions (income an
 
 In order to run the full version of this project, you must have PostgreSQL installed on your system.  Installing and configuring PostgreSQL is beyond the scope of this README, but help and documentation can be found [here](https://postgresql.org).
 
-If you have PostgreSQL installed, you'll need to configure the `/server/db/index.js` file with your settings.
+If you have PostgreSQL installed, you'll need to configure your `.env` file so that `pg` can connect to your database (see `server/db/index.js`).  Refer to `.env example` for the appropriate variable names.
+
+## Contributing
+
+Although this project was built primary for personal and educational purposes, suggestions, issues, and contributions are welcome!
+
+```
+1. Create an issue
+2. Fork the repo
+3. Create a branch
+4. Make your changes
+5. Commit changes
+6. Make a pull request
+```
 
 ## Built With
 
@@ -24,3 +38,9 @@ If you have PostgreSQL installed, you'll need to configure the `/server/db/index
 * [TypeScript](https://www.typescriptlang.org/)
 * [Node.js](https://nodejs.org/en/)
 * [PostgreSQL](https://www.postgresql.org/)
+
+## License
+
+This project is licensed under the MIT License Copyright (c) 2021.
+
+See LICENSE for more info.
