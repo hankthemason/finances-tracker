@@ -1,7 +1,7 @@
 import { AddItemForm } from 'modules/dashboard/components/AddItemForm'
 import { useState } from 'react'
 import { GetUserInfo } from 'context/userInfoContext'
-import { updateIntersectionTypeNode } from 'typescript'
+
 
 type AddItemType = 'expenses' | 'income'
 
