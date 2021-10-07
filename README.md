@@ -12,7 +12,7 @@ Full-stack budgeting app that allows a user to log their transactions (income an
 5. open another terminal, navigate into the `server` directory, and start up the server: `npm run server`
 6. open http://localhost:3000 in your browser
 
-## Developing with the database
+## Developing with a database
 
 In order to run the full version of this project, you must have PostgreSQL installed on your system.  Installing and configuring PostgreSQL is beyond the scope of this README, but help and documentation can be found [here](https://postgresql.org).
 
