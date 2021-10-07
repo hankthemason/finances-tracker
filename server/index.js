@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const path = require('path');
 const express = require('express');
 const p = require('./db')
@@ -17,12 +19,11 @@ const initializePassport = require('./passportConfig');
 const { restart } = require('nodemon');
 initializePassport(passport)
 
-const ENV = process.env.NODE_ENV;
 const PORT = process.env.PORT || 5000;
 
 const app = express();
 app.use(express.json())
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({ extended: false }))
 app.use(cors())
 
 app.use(
@@ -62,12 +63,12 @@ app.get('/api/getTransactions', async (req, res) => {
   try {
     const transactions = await models[type].getTransactions(user_id, month, year)
     res.json(transactions)
-  } catch(err) {
+  } catch (err) {
     res.status(401).send(err.toString())
   }
 })
 
-app.get('/api/getUserExpensesInfo', async(req, res) => {
+app.get('/api/getUserExpensesInfo', async (req, res) => {
   const user_id = req.query.user_id
   const month = req.query.month
   const year = req.query.year
@@ -76,11 +77,11 @@ app.get('/api/getUserExpensesInfo', async(req, res) => {
     const userExpensesInfo = await models.expenses.getUserExpensesInfo(user_id, month, year)
     return res.json(userExpensesInfo)
   } catch (error) {
-    return res.status(400).json({ error: error.toString()})
+    return res.status(400).json({ error: error.toString() })
   }
 })
 
-app.get('/api/getUserIncomeInfo', async(req, res) => {
+app.get('/api/getUserIncomeInfo', async (req, res) => {
   const user_id = req.query.user_id
   const month = req.query.month
   const year = req.query.year
@@ -88,31 +89,31 @@ app.get('/api/getUserIncomeInfo', async(req, res) => {
     const userIncomeInfo = await models.income.getUserIncomeInfo(user_id, month, year)
     return res.json(userIncomeInfo)
   } catch (error) {
-    return res.status(400).json({ error: error.toString()})
+    return res.status(400).json({ error: error.toString() })
   }
 })
 
 app.get('/api/getExpensesCategoryTotals', async (req, res) => {
-  const user_id  = req.query.user_id
+  const user_id = req.query.user_id
   const month = req.query.month
   const year = req.query.year
   try {
     const totals = await models.expenses.getCategoryTotals(user_id, month, year)
     return res.json(totals)
   } catch (error) {
-    return res.status(400).json({ error: error.toString()})
+    return res.status(400).json({ error: error.toString() })
   }
 })
 
 app.get('/api/getIncomeCategoryTotals', async (req, res) => {
-  const user_id  = req.query.user_id
+  const user_id = req.query.user_id
   const month = req.query.month
   const year = req.query.year
   try {
     const totals = await models.income.getCategoryTotals(user_id, month, year)
     return res.json(totals)
   } catch (error) {
-    return res.status(400).json({ error: error.toString()})
+    return res.status(400).json({ error: error.toString() })
   }
 })
 
@@ -131,8 +132,8 @@ app.post('/api/addCategory', async (req, res) => {
   try {
     const message = await models.categories.addCategory(user_id, category_name, type)
     return res.json(message)
-  } catch(error) {
-    return res.status(400).json({ error: error.toString()})
+  } catch (error) {
+    return res.status(400).json({ error: error.toString() })
   }
 })
 
@@ -145,7 +146,7 @@ app.post('/api/addItem', async (req, res, next) => {
   try {
     const message = await models[type].addItem(user_id, category, amount, notes, date)
     return res.json(message)
-  } catch(error) {
+  } catch (error) {
     return res.status(400).json({ error: error.toString() })
   }
 })
@@ -166,16 +167,18 @@ app.post('/api/register', async (req, res) => {
   let errors = []
 
   if (!username || !email || !password || !password2) {
-    errors.push({ 
+    errors.push({
       type: "form",
-      message: "Please enter all fields" })
+      message: "Please enter all fields"
+    })
   }
 
   let userExists = await models.users.userExists(email)
   if (userExists) {
     errors.push({
-      type: "email", 
-      message: "This email address has already been registered."})
+      type: "email",
+      message: "This email address has already been registered."
+    })
   }
 
   const regex = `^(?=.{1,64}@)((?:[A-Za-z0-9!#$%&'*+-/=?^\{\|\}~]+|"(?:\\"|\\\\|[A-Za-z0-9\.!#\$%&'\*\+\-/=\?\^_{|}~ (),:;<>@[].])+")(?:.(?:[A-Za-z0-9!#$%&'*+-/=?^\{\|\}~]+|"(?:\\"|\\\\|[A-Za-z0-9\.!#\$%&'\*\+\-/=\?\^_{|}~ (),:;<>@[].])+")))@(?=.{1,255}.)((?:[A-Za-z0-9]+(?:(?:[A-Za-z0-9-][A-Za-z0-9])?).)+[A-Za-z]{2,})|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,6}(0|)])$`
@@ -188,15 +191,17 @@ app.post('/api/register', async (req, res) => {
   }
 
   if (password.length < 6) {
-    errors.push({ 
+    errors.push({
       type: "password",
-      message: "Password should be at least 6 characters" })
+      message: "Password should be at least 6 characters"
+    })
   }
 
   if (password != password2) {
-    errors.push({ 
+    errors.push({
       type: "password2",
-      message: "Passwords do not match" });
+      message: "Passwords do not match"
+    });
   }
 
   if (errors.length > 0) {
@@ -209,7 +214,7 @@ app.post('/api/register', async (req, res) => {
 
     let result = await models.users.createUser(username, email, hashedPassword)
     if (result) {
-      res.send({message: "success"})
+      res.send({ message: "success" })
     }
   }
 })
@@ -217,7 +222,7 @@ app.post('/api/register', async (req, res) => {
 app.post("/api/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) throw err;
-    if (!user) res.status(400).send({message: 'login error'});
+    if (!user) res.status(400).send({ message: 'login error' });
     else {
       req.login(
         user,
@@ -228,11 +233,13 @@ app.post("/api/login", (req, res, next) => {
           const body = { user_id: user.user_id, email: user.email };
           const token = jwt.sign({ user: body }, 'TOP_SECRET');
 
-          return res.json({ token, user: {
-            user_id: user.user_id,
-            email: user.email,
-            username: user.username
-          } });
+          return res.json({
+            token, user: {
+              user_id: user.user_id,
+              email: user.email,
+              username: user.username
+            }
+          });
         }
       );
     }
