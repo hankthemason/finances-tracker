@@ -2,7 +2,6 @@ import { AddItemForm } from 'modules/dashboard/components/AddItemForm'
 import { useState } from 'react'
 import { GetUserInfo } from 'context/userInfoContext'
 
-
 type AddItemType = 'expenses' | 'income'
 
 interface AddItemHOCProps {
